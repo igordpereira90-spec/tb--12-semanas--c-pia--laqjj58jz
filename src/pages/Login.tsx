@@ -96,7 +96,9 @@ export default function Login() {
             <div>
               Acompanhamento
               <br />
-              <span className="block text-2xl font-normal text-amber-100/90 mt-1">12 Semanas</span>
+              <span className="block text-2xl font-normal text-amber-100/90 mt-1">
+                em Depressão · 12 Semanas
+              </span>
             </div>
           </h1>
 

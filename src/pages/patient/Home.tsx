@@ -124,7 +124,7 @@ export default function PatientHome() {
             Olá, {user?.name?.split(' ')[0] || 'paciente'}! 👋
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            Bem-vindo de volta à sua jornada de 12 semanas
+            Bem-vindo de volta ao Programa de Acompanhamento em Depressão
           </p>
         </div>
       </div>

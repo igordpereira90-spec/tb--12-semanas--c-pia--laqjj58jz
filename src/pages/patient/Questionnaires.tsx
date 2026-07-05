@@ -104,7 +104,7 @@ export default function PatientQuestionnaires() {
       <div>
         <h1 className="text-2xl font-bold text-slate-800 mb-1">📈 Meu Progresso</h1>
         <p className="text-slate-500">
-          Acompanhe sua jornada de 12 semanas no programa de Transtorno Bipolar.
+          Acompanhe sua jornada de 12 semanas no Programa de Acompanhamento em Depressão.
         </p>
       </div>
 

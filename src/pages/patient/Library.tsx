@@ -141,7 +141,7 @@ export default function PatientLibrary() {
                 </p>
               </DialogHeader>
               <div
-                className="prose prose-slate max-w-none text-sm md:text-base prose-headings:text-slate-900 prose-headings:font-bold prose-h3:text-lg prose-p:text-slate-800 prose-p:leading-relaxed prose-li:text-slate-800 prose-li:leading-relaxed prose-strong:text-slate-900 prose-a:text-amber-700 pb-8 bg-white px-1 [&_.mission-section]:not-prose [&_.phrase-section]:not-prose"
+                className="prose prose-slate max-w-none text-sm md:text-base prose-headings:text-slate-900 prose-headings:font-bold prose-h3:text-lg prose-p:text-slate-900 prose-p:leading-relaxed prose-li:text-slate-900 prose-li:leading-relaxed prose-strong:text-slate-900 prose-a:text-amber-700 px-4 pt-2 pb-8 bg-white rounded-lg [&_.mission-section]:not-prose [&_.mission-section]:bg-amber-50 [&_.mission-section]:border [&_.mission-section]:border-amber-200 [&_.mission-section]:rounded-lg [&_.mission-section]:p-4 [&_.mission-section]:my-4 [&_.phrase-section]:not-prose [&_.phrase-section]:bg-blue-50 [&_.phrase-section]:border [&_.phrase-section]:border-blue-200 [&_.phrase-section]:rounded-lg [&_.phrase-section]:p-4 [&_.phrase-section]:my-4"
                 dangerouslySetInnerHTML={{ __html: reading.content }}
               />
               {!completedMaterialIds.has(reading.id) && (

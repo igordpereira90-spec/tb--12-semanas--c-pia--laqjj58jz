@@ -50,7 +50,21 @@ const BASE_REQUIRED = [
   'functional_impairment',
 ]
 
-const WELCOME_MESSAGE = `Acompanhamento Intensivo. Olá, bom dia. Vamos iniciar o nosso acompanhamento? O objetivo é avaliar a sua evolução ao longo do nosso tratamento, mantendo sua motivação e acelerando o seu processo de melhora. Atenciosamente, Dr. Igor`
+const ALWAYS_VISIBLE_FIELDS = new Set([
+  'attention_score',
+  'inattention_details',
+  'inattention_focus',
+  'inattention_listening',
+  'inattention_followthrough',
+  'inattention_organization',
+  'inattention_mental_effort',
+  'inattention_losing_things',
+  'worry_freq',
+  'irritability_freq',
+  'muscle_tension_freq',
+])
+
+const WELCOME_MESSAGE = `Olá, bom dia! Vamos iniciar o nosso acompanhamento? O objetivo é avaliar a sua evolução ao longo do tratamento da depressão, monitorando seu humor, sono, energia, atenção e ansiedade. Suas respostas nos ajudam a personalizar seu cuidado e acelerar o seu processo de melhora. Atenciosamente, Dr. Igor`
 
 export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, isEditing }: Props) {
   const { user } = useAuth()
@@ -104,7 +118,8 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
       .catch(() => setConfig(null))
   }, [week, isEditing])
 
-  const isEnabled = (name: string) => isEditing || !config || config[name]?.enabled !== false
+  const isEnabled = (name: string) =>
+    isEditing || ALWAYS_VISIBLE_FIELDS.has(name) || !config || config[name]?.enabled !== false
   const getLabel = (name: string, def: string) => config?.[name]?.label || def
   const getHint = (name: string, def: string) => config?.[name]?.hint || def
 
@@ -177,7 +192,10 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
     <div key={f.name} className="space-y-2">
       <div className="flex justify-between items-center">
         <div>
-          <Label className="text-sm font-medium">{getLabel(f.name, f.label)}</Label>
+          <Label className="text-sm font-medium">
+            {getLabel(f.name, f.label)}
+            {ALWAYS_VISIBLE_FIELDS.has(f.name) && <span className="text-red-500 ml-0.5">*</span>}
+          </Label>
           <span className="text-xs text-slate-400 block">{getHint(f.name, f.hint)}</span>
         </div>
         <span className="text-sm font-bold text-primary">{form[f.name]}/10</span>
