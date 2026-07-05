@@ -293,7 +293,6 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
       </Card>
 
       <Card className="p-5 space-y-4">
-        <h3 className="font-semibold text-slate-800">Ansiedade, Depressão e Sintomas</h3>
         {FREQUENCY_FIELDS.filter((f) => isEnabled(f.name)).map((f) =>
           renderFreqSelect(f.name, f.label, f.options),
         )}
@@ -316,9 +315,6 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
       </Card>
 
       <Card className="p-5 space-y-4">
-        <h3 className="font-semibold text-slate-800 flex items-center gap-2">
-          <Brain className="w-5 h-5 text-primary" /> Atenção e Concentração (TDAH)
-        </h3>
         {ATTENTION_SLIDER_FIELDS.filter((f) => isEnabled(f.name)).map(renderSlider)}
         <div className="space-y-3 pt-2 border-t border-slate-100">
           <p className="text-sm text-slate-500 italic">
