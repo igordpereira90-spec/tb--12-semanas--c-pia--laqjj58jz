@@ -1,0 +1,80 @@
+migrate(
+  (app) => {
+    const col = app.findCollectionByNameOrId('educational_materials')
+
+    // Delete all existing educational materials
+    try {
+      app.truncateCollection(col)
+    } catch (_) {}
+
+    var materials = [
+      {
+        week_number: 1,
+        title: 'SEMANA 1 — ENTENDENDO A DEPRESSÃO: O PRIMEIRO PASSO É RECOMEÇAR',
+        objective:
+          'Compreender que a depressão não é fraqueza, mas uma condição clínica que afeta corpo, mente e comportamento, e dar o primeiro passo rumo à recuperação.',
+        content:
+          '<h3>O que é depressão?</h3><p>A depressão não é fraqueza, preguiça ou falta de força de vontade. É uma condição clínica que afeta o humor, a energia, o sono, o apetite, a concentração e a forma como você enxerga a si mesmo e o mundo. Ela pode tornar tarefas simples — como levantar da cama, tomar banho ou responder uma mensagem — extremamente difíceis. Isso não é culpa sua. É parte da doença.</p><p>Receber o diagnóstico pode provocar alívio, medo, dúvida ou até negação. Todos esses sentimentos são válidos. O importante agora é entender que a recuperação é possível e acontece gradualmente, com pequenos passos consistentes.</p><h3>Como a depressão afeta o dia a dia</h3><ul><li><strong>Energia:</strong> sensação de cansaço constante, mesmo após descanso.</li><li><strong>Sono:</strong> dificuldade para dormir, sono excessivo ou sono não reparador.</li><li><strong>Prazer:</strong> perda de interesse por atividades antes agradáveis.</li><li><strong>Pensamentos:</strong> autocrítica, culpa, desesperança, dificuldade de concentração.</li><li><strong>Corpo:</strong> dores, alterações de apetite, lentidão ou agitação.</li></ul><h3>Por que pequenos passos importam</h3><p>Quando a depressão está ativa, pensar em "resolver tudo" pode paralisar. A estratégia não é fazer tudo de uma vez, mas escolher uma pequena ação por vez. Cada passo — por menor que pareça — é uma vitória que ajuda o cérebro a reconstruir circuitos de recompensa e motivação.</p><div class="mission-section"><h4>🎯 Missão da Semana</h4><p>Nesta semana, sua missão é simples, mas poderosa:</p><ol><li><strong>Registre seu humor, sono e energia</strong> todos os dias, mesmo que rapidamente. Use o questionário do programa.</li><li><strong>Faça uma atividade de 10 minutos por dia</strong> — pode ser caminhar, tomar sol, ouvir música, organizar algo pequeno. O tamanho não importa; o gesto de começar importa.</li></ol></div><div class="phrase-section"><h4>💭 Frase da Semana</h4><p><em>"Eu não preciso resolver tudo hoje. Eu só preciso dar o próximo passo."</em></p></div>',
+      },
+      {
+        week_number: 3,
+        title: 'SEMANA 3 — ATIVAÇÃO COMPORTAMENTAL: A AÇÃO VEM ANTES DA MOTIVAÇÃO',
+        objective:
+          'Aprender que a motivação não é um pré-requisito para agir, e que pequenas ações consistentes reativam o circuito de prazer e energia do cérebro.',
+        content:
+          '<h3>Por que esperar a motivação não funciona</h3><p>Um dos maiores mitos sobre a depressão é: "quando eu tiver vontade, eu faço". Mas a depressão justamente reduz a vontade. Esperar a motivação aparecer pode significar esperar indefinidamente. A boa notícia é que a psicologia nos mostra o caminho inverso: <strong>a ação vem antes da motivação</strong>. Quando você age, mesmo sem vontade, o cérebo começa a liberar substâncias associadas a recompensa e bem-estar. A motivação vem depois da ação, não antes.</p><h3>O que é ativação comportamental</h3><p>Ativação comportamental é uma estratégia baseada em evidências para depressão. Consiste em reintroduzir gradualmente atividades significativas e prazerosas na rotina, mesmo quando não há vontade. Não se trata de "forçar" ou " fingir que está bem", mas de dar ao cérebro oportunidades de experimentar prazer e senso de realização.</p><h3>Como funciona na prática</h3><ul><li>Escolha atividades <strong>pequenas e factíveis</strong>. Não comece por grandes metas.</li><li>Foque na <strong>ação</strong>, não no sentimento. O objetivo é fazer, não necessariamente curtir.</li><li><strong>Registre</strong> o que fez e como se sentiu depois. Muitas vezes, o bem-estar chega após a atividade, não antes.</li><li><strong>Repita</strong>. A repetição é o que reconstrói os circuitos de motivação.</li></ul><div class="mission-section"><h4>🎯 Missão da Semana</h4><p>Escolha <strong>3 atividades pequenas</strong> para realizar nesta semana, uma de cada categoria:</p><ol><li><strong>Cuidado pessoal:</strong> tomar banho, escovar os dentes, arrumar o cabelo, vestir uma roupa que você gosta.</li><li><strong>Atividade prazerosa:</strong> ouvir uma música favorita, ver um episódio de série, tomar um chá, observar o céu.</li><li><strong>Responsabilidade:</strong> lavar um prato, responder uma mensagem, pagar uma conta, organizar uma gaveta.</li></ol><p>Anote como se sentiu antes e depois de cada uma. O objetivo é observar, não julgar.</p></div><div class="phrase-section"><h4>💭 Frase da Semana</h4><p><em>"Eu não espero a motivação chegar. Eu começo pequeno para ela aparecer."</em></p></div>',
+      },
+      {
+        week_number: 5,
+        title: 'SEMANA 5 — ROTINA, SONO E ENERGIA: ORGANIZANDO O DIA PARA AJUDAR A MENTE',
+        objective:
+          'Compreender que o corpo e a mente funcionam em ritmo, e que regular sono, alimentação e atividade física é parte fundamental do tratamento da depressão.',
+        content:
+          '<h3>O ritmo do corpo e da mente</h3><p>O cérebro funciona como um relógio interno. Ele depende de ritmos regulares — sono, luz solar, alimentação, movimento — para regular hormônios e neurotransmissores que influenciam o humor. Quando esses ritmos são irregulares, a mente fica mais vulnerável. Por isso, <strong>rotina não é prisão: é proteção</strong>.</p><h3>O sono como pilar da saúde mental</h3><p>O sono é um dos fatores mais influentes na depressão. Dormir mal piora humor, concentração, energia e tomada de decisão. Por outro lado, regular o sono é uma das intervenções mais poderosas para a recuperação.</p><ul><li><strong>Horário regular:</strong> tente dormir e acordar sempre no mesmo horário, inclusive nos finais de semana.</li><li><strong>Luz natural:</strong> exponha-se à luz do sol logo pela manhã — isso ajuda a regular o ciclo de sono.</li><li><strong>Desaceleração noturna:</strong> reduza telas e estímulos intensos 1 hora antes de dormir.</li><li><strong>Evite cochilos longos</strong> durante o dia, especialmente à tarde.</li></ul><h3>Movimento e energia</h3><p>Atividade física não precisa ser academia intensa. Caminhar 15 minutos, alongar, dançar na sala ou fazer tarefas domésticas já produzem efeitos positivos no humor. O corpo em movimento sinaliza ao cérebro que há vida e energia disponível.</p><div class="mission-section"><h4>🎯 Missão da Semana</h4><p>Escolha <strong>2 hábitos</strong> da lista abaixo e pratique-os por pelo menos <strong>4 dias</strong> nesta semana:</p><p><strong>Hábitos para o corpo:</strong></p><ul><li>Dormir e acordar no mesmo horário</li><li>Tomar 10 minutos de sol pela manhã</li><li>Caminhar 15 minutos</li><li>Beber mais água</li></ul><p><strong>Hábitos para a mente:</strong></p><ul><li>Escrever 1 coisa boa do dia antes de dormir</li><li>Reduzir telas 30 min antes de dormir</li><li>Respirar fundo 3 vezes ao perceber tensão</li><li>Escutar uma música com atenção plena</li></ul><p>Registre no questionário quais hábitos escolheu e como se sentiu ao praticá-los.</p></div><div class="phrase-section"><h4>💭 Frase da Semana</h4><p><em>"Meu corpo precisa de ritmo para minha mente encontrar equilíbrio."</em></p></div>',
+      },
+      {
+        week_number: 7,
+        title: 'SEMANA 7 — TRATAMENTO: CONSTÂNCIA É PARTE DA MELHORA',
+        objective:
+          'Entender que a melhora da depressão é gradual, que o tratamento requer continuidade e que a comunicação honesta com a equipe é essencial.',
+        content:
+          '<h3>A melhora não é linear</h3><p>Recuperar-se da depressão não é uma linha reta para cima. Há dias melhores, dias piores e dias em que parece que nada mudou. Isso é <strong>normal</strong> e não significa que o tratamento não está funcionando. A melhora acontece em ondas: os dias bons ficam mais frequentes e os dias difíceis ficam menos intensos com o tempo.</p><h3>O papel do tratamento</h3><p>O tratamento da depressão pode incluir medicação, psicoterapia e mudanças de estilo de vida. Cada um desses componentes age de forma complementar:</p><ul><li><strong>Medicação:</strong> ajuda a regular a química cerebral. Pode levar semanas para fazer efeito completo. Não interrompa por conta própria, mesmo sentindo melhora.</li><li><strong>Psicoterapia:</strong> ajuda a modificar padrões de pensamento e comportamento, construir ferramentas e processar emoções.</li><li><strong>Hábitos:</strong> sono, movimento, alimentação e atividade significativa potencializam os outros tratamentos.</li></ul><h3>Por que as pessoas abandonam o tratamento</h3><ul><li>Porque melhoraram e acham que não precisam mais — mas a melhora <strong>é</strong> o sinal de que está funcionando.</li><li>Por causa de efeitos colaterais — fale com a equipe, quase sempre há alternativas.</li><li>Por frustração com a lentidão — a recuperação leva tempo, mas cada semana conta.</li></ul><h3>Comunicação com a equipe</h3><p>Seja honesto com seu médico e terapeuta. Informe:</p><ul><li>Melhoras e pioras observadas.</li><li>Efeitos incômodos de medicação.</li><li>Dúvidas, medos e expectativas.</li><li>Uso de outras substâncias, suplementos ou medicações.</li></ul><div class="mission-section"><h4>🎯 Missão da Semana</h4><p>Sua missão esta semana é focar na continuidade:</p><ol><li><strong>Siga o plano de tratamento</strong> combinado com sua equipe — medicação, terapia e hábitos.</li><li><strong>Anote 2 melhorias</strong> que você percebeu desde o início do programa, por menores que sejam.</li><li><strong>Anote 2 dúvidas</strong> que você gostaria de levar para a próxima consulta.</li></ol><p>Traga essas anotações para a consulta. Elas são parte importante do seu cuidado.</p></div><div class="phrase-section"><h4>💭 Frase da Semana</h4><p><em>"Melhorar não é virar outra pessoa. É voltar a se reconhecer aos poucos."</em></p></div>',
+      },
+      {
+        week_number: 9,
+        title: 'SEMANA 9 — PENSAMENTOS DEPRESSIVOS: NEM TODO PENSAMENTO É UM FATO',
+        objective:
+          'Aprender a identificar distorções cognitivas típicas da depressão e desenvolver a capacidade de questionar pensamentos automáticos negativos.',
+        content:
+          '<h3>Como a depressão afeta o pensamento</h3><p>A depressão não só afeta o humor e a energia — ela também distorce a forma como você pensa. Pensamentos automáticos negativos passam a aparecer com mais frequência e intensidade, e parecem verdades inquestionáveis. Mas <strong>nem todo pensamento é um fato</strong>. Aprender a identificá-los e questioná-los é uma das habilidades mais poderosas da terapia cognitivo-comportamental.</p><h3>Principais distorções cognitivas</h3><ul><li><strong>Pensamento tudo-ou-nada:</strong> "se não for perfeito, é um fracasso total."</li><li><strong>Catastrofização:</strong> "se isso deu errado, tudo vai dar errado."</li><li><strong>Generalização excessiva:</strong> "sempre dou erro em tudo."</li><li><strong>Filtro mental:</strong> focar apenas no negativo e ignorar o positivo.</li><li><strong>Leitura mental:</strong> "as pessoas estão me julgando." (sem evidência)</li><li><strong>Culpa pessoal:</strong> "tudo é minha culpa."</li><li><strong>Rotulagem:</strong> "sou um fracasso." (em vez de "eu falhei nesta tarefa")</li></ul><h3>O modelo dos três componentes</h3><p>Pensamento, emoção e comportamento estão conectados. Quando você muda um, os outros tendem a mudar também:</p><ul><li><strong>Pensamento:</strong> "ninguém se importa comigo."</li><li><strong>Emoção:</strong> tristeza, solidão.</li><li><strong>Comportamento:</strong> isolar-se, não responder mensagens.</li></ul><p>Questionar o pensamento — "que evidências eu tenho de que ninguém se importa? E contra?" — pode reduzir a intensidade da emoção e abrir espaço para um comportamento diferente.</p><div class="mission-section"><h4>🎯 Missão da Semana</h4><p>Pratique a identificação de pensamentos automáticos:</p><ol><li><strong>Identifique um pensamento negativo</strong> que apareceu durante a semana.</li><li><strong>Anote a emoção</strong> que ele provocou (tristeza, culpa, raiva, etc.).</li><li><strong>Busque evidências a favor e contra</strong> esse pensamento. Escreva ambas.</li><li><strong>Crie um pensamento alternativo</strong> mais realista — não precisa ser otimista, apenas equilibrado.</li></ol><p>Exemplo: Pensamento: "Eu nunca vou melhorar." Evidência contra: "Nas últimas semanas, tive 3 dias em que consegui fazer atividades." Pensamento alternativo: "A melhora é lenta, mas está acontecendo."</p></div><div class="phrase-section"><h4>💭 Frase da Semana</h4><p><em>"Eu posso acolher o que sinto sem acreditar em tudo que penso."</em></p></div>',
+      },
+      {
+        week_number: 11,
+        title: 'SEMANA 11 — MANTENDO OS GANHOS: A MELHORA CONTINUA SENDO CONSTRUÍDA',
+        objective:
+          'Consolidar os aprendizados do programa, reconhecer padrões de melhora e construir um plano de continuidade para sustentar os ganhos após as 12 semanas.',
+        content:
+          '<h3>Olhando para trás, enxergando para frente</h3><p>Você chegou à reta final do programa de 12 semanas. Este é um momento de pausar e reconhecer o caminho percorrido. A melhora da depressão não é um evento único, mas um <strong>processo contínuo de construção</strong>. Os ganhos que você conquistou — por menores que pareçam — são reais e merecem ser reconhecidos.</p><h3>Identificando padrões</h3><p>Ao longo destas semanas, você registrou humor, sono, energia, atividades e pensamentos. Esses registros são um tesouro de informação. Revendo-os, é possível identificar:</p><ul><li><strong>O que ajuda:</strong> quais atividades, hábitos ou atitudes estiveram associados a dias melhores.</li><li><strong>O que piora:</strong> quais situações, padrões de sono ou pensamentos precederam dias difíceis.</li><li><strong>Sinais de alerta:</strong> mudanças que costumam aparecer antes de uma recaída.</li></ul><h3>A prevenção de recaída</h3><p>Recaídas podem acontecer e não significam fracasso. Significam que algo precisa de ajuste. O plano de continuidade ajuda a agir cedo, antes que a piora se instale. Ele deve incluir:</p><ul><li>Hábitos que comprovadamente ajudaram.</li><li>Sinais de alerta pessoais.</li><li>Com quem contar e quando buscar ajuda profissional.</li><li>Metas realistas e gentis.</li></ul><div class="mission-section"><h4>🎯 Missão da Semana</h4><p>Construa seu <strong>Plano de Continuidade</strong>. Escreva:</p><ol><li><strong>3 melhorias</strong> que você percebeu desde o início do programa.</li><li><strong>3 hábitos</strong> que você quer manter nos próximos meses.</li><li><strong>1 atividade prazerosa</strong> que você vai garantir pelo menos 1x por semana.</li><li><strong>1 dificuldade</strong> que ainda precisa de atenção.</li><li><strong>1 meta realista</strong> para os próximos 30 dias (pode ser pequena!).</li></ol><p>Traga esse plano para a consulta da semana 12. Ele é o seu mapa para os próximos meses.</p></div><div class="phrase-section"><h4>💭 Frase da Semana</h4><p><em>"Minha melhora é construída por pequenas escolhas repetidas com cuidado."</em></p></div>',
+      },
+    ]
+
+    for (var i = 0; i < materials.length; i++) {
+      var m = materials[i]
+      try {
+        app.findFirstRecordByData('educational_materials', 'week_number', m.week_number)
+      } catch (_) {
+        var r = new Record(col)
+        r.set('week_number', m.week_number)
+        r.set('title', m.title)
+        r.set('objective', m.objective)
+        r.set('content', m.content)
+        app.save(r)
+      }
+    }
+  },
+  (app) => {
+    try {
+      app.truncateCollection(app.findCollectionByNameOrId('educational_materials'))
+    } catch (_) {}
+  },
+)

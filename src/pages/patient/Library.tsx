@@ -141,7 +141,7 @@ export default function PatientLibrary() {
                 </p>
               </DialogHeader>
               <div
-                className="prose prose-slate max-w-none text-sm md:text-base prose-headings:text-amber-900 prose-headings:font-bold prose-h3:text-lg prose-p:leading-relaxed prose-li:leading-relaxed prose-a:text-amber-600 pb-8"
+                className="prose prose-slate max-w-none text-sm md:text-base prose-headings:text-amber-900 prose-headings:font-bold prose-h3:text-lg prose-p:leading-relaxed prose-li:leading-relaxed prose-a:text-amber-600 pb-8 [&_.mission-section]:not-prose [&_.phrase-section]:not-prose"
                 dangerouslySetInnerHTML={{ __html: reading.content }}
               />
               {!completedMaterialIds.has(reading.id) && (
