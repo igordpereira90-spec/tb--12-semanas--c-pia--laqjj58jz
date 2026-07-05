@@ -27,6 +27,17 @@ export interface Questionnaire {
   functional_impairment: string
   specific_evolution: string
   future_expectations: string
+  worry_freq?: string
+  irritability_freq?: string
+  muscle_tension_freq?: string
+  attention_score?: number
+  inattention_details?: number
+  inattention_focus?: number
+  inattention_listening?: number
+  inattention_followthrough?: number
+  inattention_organization?: number
+  inattention_mental_effort?: number
+  inattention_losing_things?: number
   created: string
   updated: string
   expand?: { patient?: AppUser }

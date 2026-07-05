@@ -6,13 +6,19 @@ import { cn } from '@/lib/utils'
 import type { Questionnaire } from '@/services/questionnaires'
 import { getAIPatientSummary } from '@/services/ai-summary'
 
-type MetricKey = 'mood_score' | 'sleep_score' | 'energy_score' | 'overall_feeling'
+type MetricKey =
+  | 'mood_score'
+  | 'sleep_score'
+  | 'energy_score'
+  | 'overall_feeling'
+  | 'attention_score'
 
 const METRICS: { key: MetricKey; label: string }[] = [
   { key: 'mood_score', label: 'Humor' },
   { key: 'sleep_score', label: 'Sono' },
   { key: 'energy_score', label: 'Energia' },
   { key: 'overall_feeling', label: 'Sensação Geral' },
+  { key: 'attention_score', label: 'Atenção' },
 ]
 
 function getScoreClass(score: number): string {

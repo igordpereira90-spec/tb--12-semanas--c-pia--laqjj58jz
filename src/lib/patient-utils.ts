@@ -46,9 +46,14 @@ export function calculateMedals(questionnaires: Questionnaire[]): Medal[] {
 export function getAlerts(q: Questionnaire): { hasAlert: boolean; reasons: string[] } {
   const reasons: string[] = []
   if (q.sleep_score < 4) reasons.push('Qualidade do sono crítica')
-  if (ALERT_FREQ_VALUES.includes(q.risky_behavior)) reasons.push('Comportamento de risco elevado')
   if (ALERT_FREQ_VALUES.includes(q.insomnia_freq)) reasons.push('Insônia frequente')
-  if (ALERT_FREQ_VALUES.includes(q.euphoria)) reasons.push('Euforia elevada')
+  if (ALERT_FREQ_VALUES.includes(q.anxiety_freq)) reasons.push('Ansiedade elevada')
+  if (q.worry_freq && ALERT_FREQ_VALUES.includes(q.worry_freq))
+    reasons.push('Preocupação exagerada elevada')
+  if (q.irritability_freq && ALERT_FREQ_VALUES.includes(q.irritability_freq))
+    reasons.push('Irritabilidade elevada')
+  if (ALERT_FREQ_VALUES.includes(q.depressed_mood)) reasons.push('Humor deprimido frequente')
+  if (q.attention_score !== undefined && q.attention_score < 4) reasons.push('Atenção crítica')
   return { hasAlert: reasons.length > 0, reasons }
 }
 
@@ -87,7 +92,13 @@ export function generateSummary(questionnaires: Questionnaire[]): string {
   if (latest.sleep_score > baseline.sleep_score) parts.push('melhora na qualidade do sono')
   else if (latest.sleep_score < baseline.sleep_score) parts.push('piora na qualidade do sono')
   if (latest.energy_score > baseline.energy_score + 2)
-    parts.push('aumento significativo de energia (atenção a sinais hipomaníacos)')
+    parts.push('aumento significativo de energia')
+  if (latest.attention_score !== undefined && baseline.attention_score !== undefined) {
+    if (latest.attention_score > baseline.attention_score)
+      parts.push(`melhora na atenção (${baseline.attention_score} → ${latest.attention_score})`)
+    else if (latest.attention_score < baseline.attention_score)
+      parts.push(`piora na atenção (${baseline.attention_score} → ${latest.attention_score})`)
+  }
   const { hasAlert, reasons } = getAlerts(latest)
   if (hasAlert) parts.push(`alertas: ${reasons.join(', ')}`)
   return `Paciente apresentou ${parts.join(', ')}.`

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-05T14:51:11.840Z",
+  "generatedAt": "2026-07-05T14:58:13.360Z",
   "collections": [
     {
       "name": "users",
@@ -142,7 +142,13 @@
           "type": "select",
           "required": false,
           "system": false,
-          "selectValues": ["Nunca", "Só um pouco", "Bastante", "Demais"]
+          "selectValues": [
+            "Nunca",
+            "Só um pouco",
+            "Bastante",
+            "Demais",
+            "Redução da necessidade de sono (p. ex., sente-se descansado com apenas 3 horas de sono)"
+          ]
         },
         {
           "name": "daytime_sleepiness",
@@ -265,6 +271,75 @@
         {
           "name": "improvement_areas_other",
           "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "worry_freq",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["Nunca", "Só um pouco", "Bastante", "Demais"]
+        },
+        {
+          "name": "irritability_freq",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["Nunca", "Só um pouco", "Bastante", "Demais"]
+        },
+        {
+          "name": "muscle_tension_freq",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["Nunca", "Só um pouco", "Bastante", "Demais"]
+        },
+        {
+          "name": "attention_score",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "inattention_details",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "inattention_focus",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "inattention_listening",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "inattention_followthrough",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "inattention_organization",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "inattention_mental_effort",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "inattention_losing_things",
+          "type": "number",
           "required": false,
           "system": false
         }

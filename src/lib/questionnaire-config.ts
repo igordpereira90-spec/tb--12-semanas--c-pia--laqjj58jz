@@ -1,4 +1,11 @@
 export const FREQ_OPTIONS = ['Nunca', 'Só um pouco', 'Bastante', 'Demais'] as const
+export const INSOMNIA_OPTIONS = [
+  'Nunca',
+  'Só um pouco',
+  'Bastante',
+  'Demais',
+  'Redução da necessidade de sono (p. ex., sente-se descansado com apenas 3 horas de sono)',
+] as const
 export const IMPROVEMENT_OPTIONS = ['Humor', 'Energia/disposição', 'Sono', 'Ansiedade', 'Outro']
 export const APPETITE_OPTIONS = [
   'Sem alteração do apetite ou peso',
@@ -39,39 +46,109 @@ export const SLIDER_FIELDS = [
   },
 ]
 
+export const ATTENTION_SLIDER_FIELDS = [
+  {
+    name: 'attention_score',
+    label: 'De 0 a 10, como está sua capacidade de atenção e concentração esta semana?',
+    hint: '0 = ruim / 10 = ótimo',
+  },
+]
+
+export const INATTENTION_SLIDER_FIELDS = [
+  {
+    name: 'inattention_details',
+    label: 'Deixa escapar detalhes ou comete erros por descuido em atividades?',
+    hint: '0 = nunca / 10 = sempre',
+  },
+  {
+    name: 'inattention_focus',
+    label: 'Tem dificuldade em manter a atenção em tarefas ou atividades?',
+    hint: '0 = nunca / 10 = sempre',
+  },
+  {
+    name: 'inattention_listening',
+    label: 'Parece não escutar quando lhe falam diretamente?',
+    hint: '0 = nunca / 10 = sempre',
+  },
+  {
+    name: 'inattention_followthrough',
+    label: 'Não segue instruções até o fim e não termina tarefas?',
+    hint: '0 = nunca / 10 = sempre',
+  },
+  {
+    name: 'inattention_organization',
+    label: 'Tem dificuldade em organizar tarefas e atividades?',
+    hint: '0 = nunca / 10 = sempre',
+  },
+  {
+    name: 'inattention_mental_effort',
+    label: 'Evita ou reluta em envolver-se em tarefas que exijam esforço mental constante?',
+    hint: '0 = nunca / 10 = sempre',
+  },
+  {
+    name: 'inattention_losing_things',
+    label: 'Perde coisas necessárias para tarefas ou atividades?',
+    hint: '0 = nunca / 10 = sempre',
+  },
+]
+
 export const CHECKBOX_FIELDS = [
   { name: 'improvement_areas', label: 'Em quais áreas você teve melhora essa semana?' },
 ]
 
-export const FREQUENCY_FIELDS = [
-  { name: 'anxiety_freq', label: 'Com que frequência tem apresentado ansiedade esta semana?' },
-  { name: 'insomnia_freq', label: 'Com que frequência tem apresentado insônia?' },
-  { name: 'daytime_sleepiness', label: 'Com que frequência tem apresentado sonolência pelo dia?' },
-  { name: 'talkativeness', label: 'Com que frequência tem ficado mais falante do que o habitual?' },
-  { name: 'racing_thoughts', label: 'Com que frequência tem apresentado pensamentos acelerados?' },
+export const FREQUENCY_FIELDS: { name: string; label: string; options: readonly string[] }[] = [
   {
-    name: 'increased_goal_activity',
-    label:
-      'Tem apresentado aumento da atividade dirigida a objetivos (seja socialmente, no trabalho, sexualmente) ou agitação psicomotora?',
+    name: 'anxiety_freq',
+    label: 'Com que frequência tem apresentado ansiedade esta semana?',
+    options: FREQ_OPTIONS,
   },
   {
-    name: 'risky_behavior',
-    label:
-      'Tem apresentado envolvimento excessivo em atividades com elevado potencial para consequências dolorosas (p. ex., envolvimento em surtos desenfreados de compras, indiscrições sexuais ou investimentos financeiros insensatos)?',
+    name: 'insomnia_freq',
+    label: 'Com que frequência tem apresentado insônia?',
+    options: INSOMNIA_OPTIONS,
   },
-  { name: 'euphoria', label: 'Tem apresentado euforia a maior parte do tempo?' },
+  {
+    name: 'daytime_sleepiness',
+    label: 'Com que frequência tem apresentado sonolência pelo dia?',
+    options: FREQ_OPTIONS,
+  },
+  {
+    name: 'worry_freq',
+    label: 'Com que frequência tem apresentado preocupação exagerada?',
+    options: FREQ_OPTIONS,
+  },
+  {
+    name: 'irritability_freq',
+    label: 'Com que frequência tem apresentado irritabilidade?',
+    options: FREQ_OPTIONS,
+  },
+  {
+    name: 'muscle_tension_freq',
+    label: 'Com que frequência tem apresentado tensão muscular?',
+    options: FREQ_OPTIONS,
+  },
   {
     name: 'depressed_mood',
     label:
       'Tem apresentado humor deprimido na maior parte do dia, quase todos os dias, conforme indicado por relato subjetivo ou por observação feita por outras pessoas?',
+    options: FREQ_OPTIONS,
   },
   {
     name: 'loss_of_interest',
     label:
       'Tem apresentado acentuada diminuição do interesse ou prazer em todas ou quase todas as atividades na maior parte do dia, quase todos os dias?',
+    options: FREQ_OPTIONS,
   },
-  { name: 'concentration_change', label: 'Tem apresentado alteração da concentração?' },
-  { name: 'physical_activity', label: 'Tem feito atividade física essa semana?' },
+  {
+    name: 'concentration_change',
+    label: 'Tem apresentado alteração da concentração?',
+    options: FREQ_OPTIONS,
+  },
+  {
+    name: 'physical_activity',
+    label: 'Tem feito atividade física essa semana?',
+    options: FREQ_OPTIONS,
+  },
 ]
 
 export const SELECT_FIELDS = [
@@ -89,6 +166,8 @@ export const TEXTAREA_FIELDS = [
 
 export const ALL_CONFIGURABLE_FIELDS = [
   ...SLIDER_FIELDS.map((f) => ({ ...f, type: 'slider' as const })),
+  ...ATTENTION_SLIDER_FIELDS.map((f) => ({ ...f, type: 'slider' as const })),
+  ...INATTENTION_SLIDER_FIELDS.map((f) => ({ ...f, type: 'slider' as const })),
   ...CHECKBOX_FIELDS.map((f) => ({ ...f, type: 'checkbox' as const })),
   ...FREQUENCY_FIELDS.map((f) => ({ ...f, type: 'freq' as const })),
   ...SELECT_FIELDS.map((f) => ({ ...f, type: 'select' as const })),

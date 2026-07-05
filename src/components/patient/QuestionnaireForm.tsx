@@ -19,14 +19,15 @@ import {
 } from '@/components/ui/select'
 import {
   SLIDER_FIELDS,
+  ATTENTION_SLIDER_FIELDS,
+  INATTENTION_SLIDER_FIELDS,
   FREQUENCY_FIELDS,
-  FREQ_OPTIONS,
   IMPROVEMENT_OPTIONS,
   APPETITE_OPTIONS,
   IMPAIRMENT_OPTIONS,
 } from '@/lib/questionnaire-config'
 import { getQuestionnaireConfigByWeek } from '@/services/questionnaire_configs'
-import { Loader2, AlertCircle } from 'lucide-react'
+import { Loader2, AlertCircle, Brain } from 'lucide-react'
 
 interface FieldConfig {
   enabled: boolean
@@ -49,6 +50,8 @@ const BASE_REQUIRED = [
   'functional_impairment',
 ]
 
+const WELCOME_MESSAGE = `Acompanhamento Intensivo. Olá, bom dia. Vamos iniciar o nosso acompanhamento? O objetivo é avaliar a sua evolução ao longo do nosso tratamento, mantendo sua motivação e acelerando o seu processo de melhora. Atenciosamente, Dr. Igor`
+
 export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, isEditing }: Props) {
   const { user } = useAuth()
   const { toast } = useToast()
@@ -66,6 +69,14 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
     mood_score: get('mood_score', 5),
     energy_score: get('energy_score', 5),
     sleep_score: get('sleep_score', 5),
+    attention_score: get('attention_score', 5),
+    inattention_details: get('inattention_details', 5),
+    inattention_focus: get('inattention_focus', 5),
+    inattention_listening: get('inattention_listening', 5),
+    inattention_followthrough: get('inattention_followthrough', 5),
+    inattention_organization: get('inattention_organization', 5),
+    inattention_mental_effort: get('inattention_mental_effort', 5),
+    inattention_losing_things: get('inattention_losing_things', 5),
     improvement_areas: Array.isArray(get('improvement_areas', []))
       ? get('improvement_areas', [])
       : [],
@@ -73,11 +84,9 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
     anxiety_freq: get('anxiety_freq', ''),
     insomnia_freq: get('insomnia_freq', ''),
     daytime_sleepiness: get('daytime_sleepiness', ''),
-    talkativeness: get('talkativeness', ''),
-    racing_thoughts: get('racing_thoughts', ''),
-    increased_goal_activity: get('increased_goal_activity', ''),
-    risky_behavior: get('risky_behavior', ''),
-    euphoria: get('euphoria', ''),
+    worry_freq: get('worry_freq', ''),
+    irritability_freq: get('irritability_freq', ''),
+    muscle_tension_freq: get('muscle_tension_freq', ''),
     depressed_mood: get('depressed_mood', ''),
     loss_of_interest: get('loss_of_interest', ''),
     concentration_change: get('concentration_change', ''),
@@ -114,13 +123,12 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
   const toggleArea = (opt: string) => {
     const cur = form.improvement_areas as string[]
     update('improvement_areas', cur.includes(opt) ? cur.filter((a) => a !== opt) : [...cur, opt])
-    if (opt === 'Outro' && cur.includes('Outro')) {
-      update('improvement_areas_other', '')
-    }
+    if (opt === 'Outro' && cur.includes('Outro')) update('improvement_areas_other', '')
   }
 
   const filledRequired = requiredFields.filter((f) => form[f]).length
-  const progress = Math.round((filledRequired / requiredFields.length) * 100)
+  const progress =
+    requiredFields.length > 0 ? Math.round((filledRequired / requiredFields.length) * 100) : 100
 
   const handleSubmit = async () => {
     const newErrors: Record<string, boolean> = {}
@@ -140,7 +148,7 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
     }
   }
 
-  const renderFreqSelect = (fieldName: string, label: string) => (
+  const renderFreqSelect = (fieldName: string, label: string, options: readonly string[]) => (
     <div key={fieldName} className="space-y-1.5">
       <Label className="text-sm font-medium text-slate-700">
         {getLabel(fieldName, label)} <span className="text-red-500">*</span>
@@ -150,7 +158,7 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
           <SelectValue placeholder="Selecione..." />
         </SelectTrigger>
         <SelectContent>
-          {FREQ_OPTIONS.map((o) => (
+          {options.map((o) => (
             <SelectItem key={o} value={o}>
               {o}
             </SelectItem>
@@ -210,6 +218,14 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
 
   return (
     <div className="space-y-6 pb-8">
+      {!isEditing && (
+        <Card className="p-5 bg-gradient-to-br from-primary/5 to-slate-50 border-primary/20">
+          <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+            {WELCOME_MESSAGE}
+          </p>
+        </Card>
+      )}
+
       <div className="space-y-1.5">
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium text-slate-600">Progresso do formulário</span>
@@ -277,28 +293,40 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
       </Card>
 
       <Card className="p-5 space-y-4">
-        <h3 className="font-semibold text-slate-800">Sintomas e Frequência</h3>
+        <h3 className="font-semibold text-slate-800">Ansiedade, Depressão e Sintomas</h3>
         {FREQUENCY_FIELDS.filter((f) => isEnabled(f.name)).map((f) =>
-          renderFreqSelect(f.name, f.label),
+          renderFreqSelect(f.name, f.label, f.options),
+        )}
+        {(isEnabled('appetite_weight_change') || isEnabled('functional_impairment')) && (
+          <div className="space-y-4">
+            {isEnabled('appetite_weight_change') &&
+              renderRequiredSelect(
+                'appetite_weight_change',
+                'Tem apresentado alteração do apetite ou do peso?',
+                APPETITE_OPTIONS,
+              )}
+            {isEnabled('functional_impairment') &&
+              renderRequiredSelect(
+                'functional_impairment',
+                'Tem apresentado prejuízo importante do seu funcionamento?',
+                IMPAIRMENT_OPTIONS,
+              )}
+          </div>
         )}
       </Card>
 
-      {(isEnabled('appetite_weight_change') || isEnabled('functional_impairment')) && (
-        <Card className="p-5 space-y-4">
-          {isEnabled('appetite_weight_change') &&
-            renderRequiredSelect(
-              'appetite_weight_change',
-              'Tem apresentado alteração do apetite ou do peso?',
-              APPETITE_OPTIONS,
-            )}
-          {isEnabled('functional_impairment') &&
-            renderRequiredSelect(
-              'functional_impairment',
-              'Tem apresentado prejuízo importante do seu funcionamento?',
-              IMPAIRMENT_OPTIONS,
-            )}
-        </Card>
-      )}
+      <Card className="p-5 space-y-4">
+        <h3 className="font-semibold text-slate-800 flex items-center gap-2">
+          <Brain className="w-5 h-5 text-primary" /> Atenção e Concentração (TDAH)
+        </h3>
+        {ATTENTION_SLIDER_FIELDS.filter((f) => isEnabled(f.name)).map(renderSlider)}
+        <div className="space-y-3 pt-2 border-t border-slate-100">
+          <p className="text-sm text-slate-500 italic">
+            Avalie os itens abaixo (0 = nunca / 10 = sempre):
+          </p>
+          {INATTENTION_SLIDER_FIELDS.filter((f) => isEnabled(f.name)).map(renderSlider)}
+        </div>
+      </Card>
 
       {(isEnabled('specific_evolution') || isEnabled('future_expectations')) && (
         <Card className="p-5 space-y-4">
