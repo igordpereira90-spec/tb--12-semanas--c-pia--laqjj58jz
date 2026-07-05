@@ -107,7 +107,7 @@ export default function Layout() {
                 <span className="font-medium">{item.label}</span>
               </Link>
             )
-          })}{' '}
+          })}
         </nav>
         <div className="p-4 border-t border-slate-100 space-y-2">
           <div className="flex items-center gap-3 px-4 py-2">
@@ -144,54 +144,12 @@ export default function Layout() {
             {role === 'patient' && (
               <div className="hidden md:flex items-center gap-1 bg-[#D4AF37]/10 text-[#B8941F] px-3 py-1.5 rounded-full text-sm font-bold">
                 ⭐ {user?.points ?? 0} XP
-            </div>
-          )}
-          <NotificationsBell />
-          <Link
-            to="/profile"
-            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-[#D4AF37]/5 hover:text-[#B8941F] transition-colors"
-          >
-            <UserCircle className="w-5 h-5 text-slate-600" />
-            <span>Perfil</span>
-          </Link>
-          <UserAvatar user={user} size="sm" className="md:hidden" showRing={false} />
-        </div>
-      </header>
-
-      <div className="flex-1 p-4 md:p-8 overflow-y-auto animate-fade-in-up">
-        <div className="max-w-6xl mx-auto space-y-6">
-          <Outlet />
-        </div>
-      </div>
-    </main>
-=======
-              ⭐ {user?.points ?? 0} XP
-            </div>
-          )}
-          <NotificationsBell />
-          <Link
-            to="/profile"
-            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-[#D4AF37]/5 hover:text-[#B8941F] transition-colors"
-          >
-            <UserCircle className="w-5 h-5 text-slate-600" />
-            <span>Perfil</span>
-          </Link>
-          <UserAvatar user={user} size="sm" className="md:hidden" showRing={false} />
-        </div>
-      </header>
-
-      <div className="flex-1 p-4 md:p-8 overflow-y-auto animate-fade-in-up">
-        <div className="max-w-6xl mx-auto space-y-6">
-          <Outlet />
-        </div>
-      </div>
-    </main>
               </div>
             )}
             <NotificationsBell />
             <Link
               to="/profile"
-              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-primary/5 hover:text-primary transition-colors"
+              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-[#D4AF37]/5 hover:text-[#B8941F] transition-colors"
             >
               <UserCircle className="w-5 h-5 text-slate-600" />
               <span>Perfil</span>
