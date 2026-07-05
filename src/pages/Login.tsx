@@ -92,8 +92,12 @@ export default function Login() {
           </div>
 
           <h1 className="font-serif text-4xl font-bold leading-tight mb-4">
-            Transtorno Bipolar
-            <span className="block text-2xl font-normal text-amber-100/90 mt-1">12 Semanas</span>
+            Programa&nbsp;<span>de</span>
+            <div>
+              Acompanhamento
+              <br />
+              <span className="block text-2xl font-normal text-amber-100/90 mt-1">12 Semanas</span>
+            </div>
           </h1>
 
           <p className="text-amber-50/80 text-lg leading-relaxed mb-12">
