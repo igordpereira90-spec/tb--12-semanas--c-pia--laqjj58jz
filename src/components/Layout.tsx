@@ -73,8 +73,8 @@ export default function Layout() {
   const homePath = role === 'professional' ? '/pro' : '/'
 
   return (
-    <div className="min-h-screen flex bg-slate-50">
-      <aside className="hidden md:flex flex-col w-64 border-r border-primary/10 bg-white shadow-sm rounded-none">
+    <div className="min-h-screen flex bg-[#FBFAF7]">
+      <aside className="hidden md:flex flex-col w-64 border-r border-[#D4AF37]/15 bg-white shadow-sm rounded-none">
         <div className="p-6">
           <Link to={homePath} className="block">
             <img
@@ -99,8 +99,8 @@ export default function Layout() {
                 className={cn(
                   'flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200',
                   isActive
-                    ? 'bg-gradient-to-r from-primary to-[#b4944a] text-white shadow-md shadow-primary/20'
-                    : 'text-slate-600 hover:bg-primary/5 hover:text-primary',
+                    ? 'bg-gradient-to-r from-[#D4AF37] to-[#B8941F] text-white shadow-md shadow-[#D4AF37]/20'
+                    : 'text-slate-600 hover:bg-[#D4AF37]/5 hover:text-[#B8941F]',
                 )}
               >
                 <Icon className={cn('w-5 h-5 shrink-0', isActive && 'text-white')} />
@@ -131,8 +131,8 @@ export default function Layout() {
         </div>
       </aside>
 
-      <main className="flex-1 flex flex-col min-w-0 pb-20 md:pb-0 bg-slate-50/50">
-        <header className="h-16 flex items-center justify-between px-4 md:px-8 bg-white/80 backdrop-blur-md border-b border-primary/10 sticky top-0 z-20 shadow-sm">
+      <main className="flex-1 flex flex-col min-w-0 pb-20 md:pb-0 bg-[#FBFAF7]/50">
+        <header className="h-16 flex items-center justify-between px-4 md:px-8 bg-white/90 backdrop-blur-md border-b border-[#D4AF37]/15 sticky top-0 z-20 shadow-sm">
           <Link
             to={homePath}
             className="flex items-center gap-3 transition-opacity duration-200 hover:opacity-80"
@@ -142,8 +142,50 @@ export default function Layout() {
           </div>
           <div className="flex items-center space-x-4">
             {role === 'patient' && (
-              <div className="hidden md:flex items-center gap-1 bg-amber-50 text-amber-700 px-3 py-1.5 rounded-full text-sm font-bold">
+              <div className="hidden md:flex items-center gap-1 bg-[#D4AF37]/10 text-[#B8941F] px-3 py-1.5 rounded-full text-sm font-bold">
                 ⭐ {user?.points ?? 0} XP
+            </div>
+          )}
+          <NotificationsBell />
+          <Link
+            to="/profile"
+            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-[#D4AF37]/5 hover:text-[#B8941F] transition-colors"
+          >
+            <UserCircle className="w-5 h-5 text-slate-600" />
+            <span>Perfil</span>
+          </Link>
+          <UserAvatar user={user} size="sm" className="md:hidden" showRing={false} />
+        </div>
+      </header>
+
+      <div className="flex-1 p-4 md:p-8 overflow-y-auto animate-fade-in-up">
+        <div className="max-w-6xl mx-auto space-y-6">
+          <Outlet />
+        </div>
+      </div>
+    </main>
+=======
+              ⭐ {user?.points ?? 0} XP
+            </div>
+          )}
+          <NotificationsBell />
+          <Link
+            to="/profile"
+            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-[#D4AF37]/5 hover:text-[#B8941F] transition-colors"
+          >
+            <UserCircle className="w-5 h-5 text-slate-600" />
+            <span>Perfil</span>
+          </Link>
+          <UserAvatar user={user} size="sm" className="md:hidden" showRing={false} />
+        </div>
+      </header>
+
+      <div className="flex-1 p-4 md:p-8 overflow-y-auto animate-fade-in-up">
+        <div className="max-w-6xl mx-auto space-y-6">
+          <Outlet />
+        </div>
+      </div>
+    </main>
               </div>
             )}
             <NotificationsBell />

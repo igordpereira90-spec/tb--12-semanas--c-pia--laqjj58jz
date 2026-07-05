@@ -102,7 +102,7 @@ export default function Profile() {
         <p className="text-sm text-slate-500 mt-1">Gerencie suas informações pessoais</p>
       </div>
 
-      <Card className="border-amber-100/50 shadow-sm">
+      <Card className="border-[#D4AF37]/20 shadow-sm premium-card">
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-slate-800">Foto de Perfil</CardTitle>
           <CardDescription className="text-slate-500">
@@ -116,7 +116,7 @@ export default function Profile() {
               size="xl"
               src={avatarPreview || undefined}
               showRing={false}
-              className="ring-4 ring-amber-100 ring-offset-2"
+              className="ring-4 ring-[#D4AF37]/20 ring-offset-2"
             />
             <div className="space-y-2">
               <StockAvatarPicker onSelect={handleStockAvatarSelect} />
@@ -131,7 +131,7 @@ export default function Profile() {
         </CardContent>
       </Card>
 
-      <Card className="border-amber-100/50 shadow-sm">
+      <Card className="border-[#D4AF37]/20 shadow-sm premium-card">
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-slate-800">
             Informações Pessoais
@@ -146,14 +146,14 @@ export default function Profile() {
               htmlFor="profile-name"
               className="text-slate-700 font-medium flex items-center gap-2"
             >
-              <User className="w-4 h-4 text-amber-600" /> Nome
+              <User className="w-4 h-4 text-[#D4AF37]" /> Nome
             </Label>
             <Input
               id="profile-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Seu nome completo"
-              className="bg-slate-50 border-amber-100 focus:border-amber-400 focus:ring-amber-400/20"
+              className="bg-slate-50 border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-[#D4AF37]/20"
             />
             {fieldErrors.name && <p className="text-xs text-rose-500">{fieldErrors.name}</p>}
           </div>
@@ -163,7 +163,7 @@ export default function Profile() {
               htmlFor="profile-email"
               className="text-slate-700 font-medium flex items-center gap-2"
             >
-              <Mail className="w-4 h-4 text-amber-600" /> E-mail
+              <Mail className="w-4 h-4 text-[#D4AF37]" /> E-mail
             </Label>
             <Input
               id="profile-email"
@@ -171,7 +171,7 @@ export default function Profile() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="seu@email.com"
-              className="bg-slate-50 border-amber-100 focus:border-amber-400 focus:ring-amber-400/20"
+              className="bg-slate-50 border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-[#D4AF37]/20"
             />
             {fieldErrors.email && <p className="text-xs text-rose-500">{fieldErrors.email}</p>}
           </div>
@@ -181,7 +181,7 @@ export default function Profile() {
               htmlFor="profile-age"
               className="text-slate-700 font-medium flex items-center gap-2"
             >
-              <Calendar className="w-4 h-4 text-amber-600" /> Idade
+              <Calendar className="w-4 h-4 text-[#D4AF37]" /> Idade
             </Label>
             <Input
               id="profile-age"
@@ -191,7 +191,7 @@ export default function Profile() {
               value={age}
               onChange={(e) => setAge(e.target.value)}
               placeholder="Sua idade"
-              className="bg-slate-50 border-amber-100 focus:border-amber-400 focus:ring-amber-400/20 max-w-32"
+              className="bg-slate-50 border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-[#D4AF37]/20 max-w-32"
             />
             {fieldErrors.age && <p className="text-xs text-rose-500">{fieldErrors.age}</p>}
           </div>
@@ -200,7 +200,7 @@ export default function Profile() {
             <Button
               onClick={handleSave}
               disabled={saving}
-              className="bg-gradient-to-r from-[#C5A028] to-[#D4AF37] hover:from-[#B8941F] hover:to-[#C5A028] text-white shadow-lg shadow-amber-500/20 min-w-32"
+              className="bg-gradient-to-r from-[#D4AF37] to-[#B8941F] hover:from-[#C5A028] hover:to-[#B8941F] text-white shadow-lg shadow-[#D4AF37]/20 min-w-32"
             >
               {saving ? (
                 <>
@@ -216,7 +216,7 @@ export default function Profile() {
         </CardContent>
       </Card>
 
-      <Card className="border-amber-100/50 shadow-sm">
+      <Card className="border-[#D4AF37]/20 shadow-sm premium-card">
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-slate-800">🏆 Gamificação</CardTitle>
           <CardDescription className="text-slate-500">

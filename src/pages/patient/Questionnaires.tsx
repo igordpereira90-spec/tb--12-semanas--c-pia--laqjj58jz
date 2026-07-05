@@ -103,16 +103,14 @@ export default function PatientQuestionnaires() {
     <div className="space-y-6 animate-fade-in">
       <div>
         <h1 className="text-2xl font-bold text-slate-800 mb-1">📈 Meu Progresso</h1>
-        <p className="text-slate-500">
-          Acompanhe sua jornada de 12 semanas no Programa de Acompanhamento em Depressão.
-        </p>
+        <p className="text-slate-500">Acompanhe sua jornada de 12 semanas no programa.</p>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="p-4 bg-white border border-primary/20 shadow-sm relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
+        <Card className="p-4 bg-white border border-[#D4AF37]/20 shadow-sm relative overflow-hidden premium-card">
+          <div className="absolute top-0 left-0 w-1 h-full bg-[#D4AF37]" />
           <div className="flex items-center gap-2 mb-1 ml-2">
-            <Activity className="w-4 h-4 text-primary" />
+            <Activity className="w-4 h-4 text-[#D4AF37]" />
             <p className="text-sm text-slate-500 font-medium">Semana Atual</p>
           </div>
           <p className="text-2xl font-bold text-slate-800 ml-2">{currentWeek}</p>
@@ -153,7 +151,7 @@ export default function PatientQuestionnaires() {
         </Card>
       </div>
 
-      <Card className="p-6 shadow-sm border-slate-100">
+      <Card className="p-6 shadow-sm border-[#D4AF37]/15 premium-card">
         <div className="space-y-2 mb-4">
           <div className="flex items-center justify-between text-sm">
             <span className="font-semibold text-slate-700">Progresso Geral do Programa</span>

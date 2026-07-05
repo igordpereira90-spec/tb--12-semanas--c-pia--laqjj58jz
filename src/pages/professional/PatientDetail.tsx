@@ -139,25 +139,40 @@ export default function PatientDetail() {
 
   return (
     <div className="space-y-6 animate-fade-in pb-10">
-      <div className="flex items-center gap-4">
-        <Button variant="outline" size="icon" onClick={() => navigate(-1)} className="rounded-full">
-          <ArrowLeft className="w-4 h-4" />
-        </Button>
-        <UserAvatar user={patient} size="lg" />
-        <div>
-          <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold text-slate-800">{patient.name}</h1>
-            {alerts.hasAlert && (
-              <Badge variant="destructive" className="animate-pulse">
-                Atenção Requerida
+      <Card className="p-6 border-[#D4AF37]/20 shadow-sm bg-gradient-to-br from-white to-[#D4AF37]/[0.03] premium-header-accent pl-8">
+        <div className="flex items-center gap-4">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => navigate(-1)}
+            className="rounded-full border-[#D4AF37]/30 hover:bg-[#D4AF37]/5 hover:text-[#B8941F] hover:border-[#D4AF37]/50"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </Button>
+          <UserAvatar user={patient} size="lg" />
+          <div className="flex-1">
+            <div className="flex items-center gap-3 flex-wrap">
+              <h1 className="text-2xl font-bold text-slate-800 tracking-tight">{patient.name}</h1>
+              {alerts.hasAlert && (
+                <Badge variant="destructive" className="animate-pulse">
+                  Atenção Requerida
+                </Badge>
+              )}
+              <Badge className="bg-[#D4AF37]/10 text-[#B8941F] border border-[#D4AF37]/20 hover:bg-[#D4AF37]/15">
+                {patient.role === 'professional' ? 'Profissional' : 'Paciente'}
               </Badge>
-            )}
+              {patient.points != null && (
+                <Badge className="bg-[#D4AF37]/10 text-[#B8941F] border border-[#D4AF37]/20 hover:bg-[#D4AF37]/15">
+                  ⭐ {patient.points} XP
+                </Badge>
+              )}
+            </div>
+            <p className="text-slate-500 mt-1">
+              Semana atual: {currentWeek} de 12 • {questionnaires.length} questionários preenchidos
+            </p>
           </div>
-          <p className="text-slate-500">
-            Semana atual: {currentWeek} de 12 • {questionnaires.length} questionários preenchidos
-          </p>
         </div>
-      </div>
+      </Card>
 
       {alerts.hasAlert && (
         <Alert variant="destructive" className="bg-rose-50 border-rose-200 text-rose-900">
@@ -171,25 +186,25 @@ export default function PatientDetail() {
         </Alert>
       )}
 
-      <Card className="p-6 border-primary/10 shadow-sm">
+      <Card className="p-6 border-[#D4AF37]/15 shadow-sm premium-card">
         <h2 className="text-lg font-semibold mb-6 flex items-center text-slate-800">
-          <TrendingUp className="w-5 h-5 mr-2 text-primary" /> Evolução Clínica (Scores 0-10)
+          <TrendingUp className="w-5 h-5 mr-2 text-[#D4AF37]" /> Evolução Clínica (Scores 0-10)
         </h2>
         <PatientChart questionnaires={sorted} />
       </Card>
 
       <WeeklyEvolution questionnaires={sorted} patientId={patient.id} />
 
-      <Card className="p-6 border-primary/10 shadow-sm">
+      <Card className="p-6 border-[#D4AF37]/15 shadow-sm premium-card">
         <h2 className="text-lg font-semibold mb-4 flex items-center text-slate-800">
-          <Table2 className="w-5 h-5 mr-2 text-primary" /> Comparativo Longitudinal
+          <Table2 className="w-5 h-5 mr-2 text-[#D4AF37]" /> Comparativo Longitudinal
         </h2>
         <LongitudinalTable questionnaires={sorted} />
       </Card>
 
-      <Card className="p-6 border-primary/10 shadow-sm">
+      <Card className="p-6 border-[#D4AF37]/15 shadow-sm premium-card">
         <h2 className="text-lg font-semibold mb-4 flex items-center text-slate-800">
-          <History className="w-5 h-5 mr-2 text-primary" /> Histórico de Questionários
+          <History className="w-5 h-5 mr-2 text-[#D4AF37]" /> Histórico de Questionários
         </h2>
         <QuestionnaireHistory
           questionnaires={sorted}
@@ -200,9 +215,9 @@ export default function PatientDetail() {
         />
       </Card>
 
-      <Card className="p-6 border-primary/10 shadow-sm bg-primary/5">
+      <Card className="p-6 border-[#D4AF37]/15 shadow-sm premium-card bg-[#D4AF37]/[0.03]">
         <h2 className="text-lg font-semibold mb-2 flex items-center text-slate-800">
-          <Lock className="w-5 h-5 mr-2 text-primary" /> Gestão de Acesso
+          <Lock className="w-5 h-5 mr-2 text-[#D4AF37]" /> Gestão de Acesso
         </h2>
         <p className="text-sm text-slate-600 mb-6">
           Libere manualmente semanas para este paciente.
@@ -210,9 +225,9 @@ export default function PatientDetail() {
         <AccessManagement patientId={patient.id} />
       </Card>
 
-      <Card className="p-6 border-primary/10 shadow-sm">
+      <Card className="p-6 border-[#D4AF37]/15 shadow-sm premium-card">
         <h2 className="text-lg font-semibold mb-4 text-slate-800 flex items-center gap-2">
-          <span className="w-1.5 h-5 bg-primary rounded-full inline-block"></span>
+          <span className="w-1.5 h-5 bg-[#D4AF37] rounded-full inline-block"></span>
           Notas Profissionais (Privado)
         </h2>
         <Textarea
@@ -225,7 +240,7 @@ export default function PatientDetail() {
           <Button
             onClick={handleSaveNotes}
             disabled={savingNotes}
-            className="bg-primary hover:bg-primary/90 text-white shadow-md shadow-primary/20"
+            className="bg-[#D4AF37] hover:bg-[#B8941F] text-white shadow-md shadow-[#D4AF37]/20"
           >
             {savingNotes ? (
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />

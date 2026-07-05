@@ -63,9 +63,9 @@ export function WeeklyEvolution({ questionnaires, patientId }: Props) {
     selectedMetric === 'all' ? METRICS : METRICS.filter((m) => m.key === selectedMetric)
 
   return (
-    <Card className="p-6 border-primary/10 shadow-sm">
+    <Card className="p-6 border-[#D4AF37]/15 shadow-sm premium-card">
       <h2 className="text-lg font-semibold mb-4 flex items-center text-slate-800">
-        <Calendar className="w-5 h-5 mr-2 text-primary" /> Evolução Semanal
+        <Calendar className="w-5 h-5 mr-2 text-[#D4AF37]" /> Evolução Semanal
       </h2>
 
       <div className="flex gap-2 flex-wrap mb-5">
@@ -73,7 +73,10 @@ export function WeeklyEvolution({ questionnaires, patientId }: Props) {
           size="sm"
           variant={selectedMetric === 'all' ? 'default' : 'outline'}
           onClick={() => setSelectedMetric('all')}
-          className={cn('rounded-full', selectedMetric === 'all' && 'bg-primary text-white')}
+          className={cn(
+            'rounded-full',
+            selectedMetric === 'all' && 'bg-[#D4AF37] text-white hover:bg-[#B8941F]',
+          )}
         >
           Todos
         </Button>
@@ -83,7 +86,10 @@ export function WeeklyEvolution({ questionnaires, patientId }: Props) {
             size="sm"
             variant={selectedMetric === m.key ? 'default' : 'outline'}
             onClick={() => setSelectedMetric(m.key)}
-            className={cn('rounded-full', selectedMetric === m.key && 'bg-primary text-white')}
+            className={cn(
+              'rounded-full',
+              selectedMetric === m.key && 'bg-[#D4AF37] text-white hover:bg-[#B8941F]',
+            )}
           >
             {m.label}
           </Button>
@@ -103,8 +109,8 @@ export function WeeklyEvolution({ questionnaires, patientId }: Props) {
         <div className="overflow-x-auto rounded-lg border border-slate-100">
           <table className="w-full text-sm min-w-[400px]">
             <thead>
-              <tr className="bg-primary/5 border-b border-primary/10">
-                <th className="text-left py-3 px-3 font-semibold text-primary sticky left-0 bg-white z-10">
+              <tr className="bg-[#D4AF37]/5 border-b border-[#D4AF37]/10">
+                <th className="text-left py-3 px-3 font-semibold text-[#B8941F] sticky left-0 bg-white z-10">
                   Métrica
                 </th>
                 {sorted.map((q) => (
@@ -153,9 +159,9 @@ export function WeeklyEvolution({ questionnaires, patientId }: Props) {
         </div>
       )}
 
-      <div className="mt-6 p-4 bg-gradient-to-br from-primary/5 to-slate-50 rounded-lg border border-primary/10">
+      <div className="mt-6 p-4 bg-gradient-to-br from-[#D4AF37]/5 to-slate-50 rounded-lg border border-[#D4AF37]/15">
         <div className="flex items-center gap-2 mb-2">
-          <Brain className="w-4 h-4 text-primary" />
+          <Brain className="w-4 h-4 text-[#D4AF37]" />
           <strong className="text-sm text-slate-900">Resumo Inteligente (IA)</strong>
         </div>
         {summaryLoading ? (

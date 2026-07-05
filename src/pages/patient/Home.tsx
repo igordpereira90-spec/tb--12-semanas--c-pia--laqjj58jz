@@ -124,7 +124,7 @@ export default function PatientHome() {
             Olá, {user?.name?.split(' ')[0] || 'paciente'}! 👋
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            Bem-vindo de volta ao Programa de Acompanhamento em Depressão
+            Bem-vindo de volta ao seu programa de acompanhamento
           </p>
         </div>
       </div>
@@ -140,11 +140,11 @@ export default function PatientHome() {
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-slate-800">Sua Jornada</h2>
-          <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
+          <span className="text-sm font-medium text-[#B8941F] bg-[#D4AF37]/10 px-3 py-1 rounded-full">
             ⭐ {points} / {MAX_XP} XP
           </span>
         </div>
-        <Card className="p-2 md:p-6 shadow-sm border-slate-100">
+        <Card className="p-2 md:p-6 shadow-sm border-[#D4AF37]/15 premium-card">
           <Timeline
             completedWeeks={completedWeeks}
             unlockedWeeks={unlockedWeeks}
@@ -167,11 +167,11 @@ export default function PatientHome() {
           </div>
         </Card>
         {unlockedWeeks.length > 0 && (
-          <Card className="p-4 bg-indigo-50/50 border-indigo-100 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+          <Card className="p-4 bg-[#D4AF37]/[0.06] border-[#D4AF37]/20 flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-[#D4AF37]/15 text-[#B8941F] flex items-center justify-center shrink-0">
               <Unlock className="w-4 h-4" />
             </div>
-            <p className="text-sm text-indigo-700">
+            <p className="text-sm text-[#B8941F]">
               Seu profissional liberou {unlockedWeeks.length}{' '}
               {unlockedWeeks.length > 1 ? 'semanas adicionais' : 'semana adicional'} para acesso
               antecipado.

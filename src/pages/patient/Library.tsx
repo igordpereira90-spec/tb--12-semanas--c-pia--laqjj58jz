@@ -76,7 +76,7 @@ export default function PatientLibrary() {
           <h1 className="text-2xl font-bold text-slate-900 mb-2">📚 Material Educativo</h1>
           <p className="text-slate-700">A psicoeducação é parte fundamental do seu tratamento.</p>
         </div>{' '}
-        <div className="flex items-center gap-2 bg-amber-50 text-amber-700 px-4 py-2 rounded-full">
+        <div className="flex items-center gap-2 bg-[#D4AF37]/10 text-[#B8941F] px-4 py-2 rounded-full border border-[#D4AF37]/20">
           <Star className="w-4 h-4" />
           <span className="text-sm font-bold">
             ⭐ {user?.points ?? 0} / {MAX_XP} XP
@@ -84,13 +84,15 @@ export default function PatientLibrary() {
         </div>
       </div>
 
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {visibleMaterials.map((item) => {
           const isRead = completedMaterialIds.has(item.id)
           return (
             <Card
               key={item.id}
-              className="overflow-hidden border-slate-100 hover:shadow-lg transition-all group flex flex-col p-6 cursor-pointer relative"
+              className="overflow-hidden border-[#D4AF37]/15 hover:shadow-lg hover:border-[#D4AF37]/30 transition-all group flex flex-col p-6 cursor-pointer relative premium-card"
               onClick={() => setReading(item)}
             >
               {isRead && (
@@ -98,7 +100,7 @@ export default function PatientLibrary() {
                   <CheckCircle2 className="w-3 h-3 mr-1" /> Concluído
                 </Badge>
               )}
-              <Badge className="w-fit mb-4 bg-amber-50 text-amber-700 hover:bg-amber-100 transition-colors">
+              <Badge className="w-fit mb-4 bg-[#D4AF37]/10 text-[#B8941F] hover:bg-[#D4AF37]/15 border border-[#D4AF37]/20 transition-colors">
                 Semana {item.week_number}
               </Badge>
               <h3 className="font-semibold text-lg text-slate-800 mb-2 line-clamp-2">
@@ -148,7 +150,7 @@ export default function PatientLibrary() {
                 <Button
                   onClick={() => handleMarkAsRead(reading)}
                   disabled={marking}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white"
+                  className="w-full bg-[#D4AF37] hover:bg-[#B8941F] text-white shadow-md shadow-[#D4AF37]/20"
                 >
                   <CheckCircle2 className="w-4 h-4 mr-2" />
                   {marking ? 'Marcando...' : 'Marcar como lido'}

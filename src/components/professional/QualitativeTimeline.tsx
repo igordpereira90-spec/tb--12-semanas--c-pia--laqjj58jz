@@ -23,7 +23,7 @@ export function QualitativeTimeline({ questionnaires }: Props) {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 mb-2">
-        <MessageSquareText className="w-4 h-4 text-primary" />
+        <MessageSquareText className="w-4 h-4 text-[#D4AF37]" />
         <p className="text-sm text-slate-500">
           Respostas subjetivas do paciente organizadas por semana do programa
         </p>
@@ -38,11 +38,11 @@ export function QualitativeTimeline({ questionnaires }: Props) {
           return (
             <Card
               key={week}
-              className="p-5 border-primary/15 shadow-sm hover:shadow-md transition-shadow duration-200"
+              className="p-5 border-[#D4AF37]/15 shadow-sm hover:shadow-md transition-shadow duration-200 premium-card"
             >
               <div className="flex items-center gap-3 mb-4 pb-3 border-b border-primary/10">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                  <CalendarDays className="w-5 h-5 text-primary" />
+                <div className="w-10 h-10 rounded-full bg-[#D4AF37]/10 flex items-center justify-center shrink-0">
+                  <CalendarDays className="w-5 h-5 text-[#D4AF37]" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-slate-800">Semana {week}</h3>
@@ -60,8 +60,8 @@ export function QualitativeTimeline({ questionnaires }: Props) {
                 <div className="space-y-4">
                   <div>
                     <div className="flex items-center gap-1.5 mb-1">
-                      <FileText className="w-3.5 h-3.5 text-primary" />
-                      <span className="text-xs font-semibold text-primary uppercase tracking-wide">
+                      <FileText className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      <span className="text-xs font-semibold text-[#B8941F] uppercase tracking-wide">
                         Evolução Específica
                       </span>
                     </div>
@@ -77,8 +77,8 @@ export function QualitativeTimeline({ questionnaires }: Props) {
                   </div>
                   <div>
                     <div className="flex items-center gap-1.5 mb-1">
-                      <FileText className="w-3.5 h-3.5 text-primary" />
-                      <span className="text-xs font-semibold text-primary uppercase tracking-wide">
+                      <FileText className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      <span className="text-xs font-semibold text-[#B8941F] uppercase tracking-wide">
                         Expectativas Futuras
                       </span>
                     </div>

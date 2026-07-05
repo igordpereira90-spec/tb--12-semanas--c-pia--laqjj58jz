@@ -68,8 +68,8 @@ export function LongitudinalTable({ questionnaires }: Props) {
     <div className="overflow-x-auto rounded-lg border border-slate-100">
       <table className="w-full text-sm min-w-[600px]">
         <thead>
-          <tr className="bg-primary/5 border-b border-primary/10">
-            <th className="text-left py-3 px-3 font-semibold text-primary sticky left-0 bg-white z-10 shadow-[1px_0_0_0_rgba(0,0,0,0.05)]">
+          <tr className="bg-[#D4AF37]/5 border-b border-[#D4AF37]/10">
+            <th className="text-left py-3 px-3 font-semibold text-[#B8941F] sticky left-0 bg-white z-10 shadow-[1px_0_0_0_rgba(0,0,0,0.05)]">
               Métrica
             </th>
             {weekData.map((w) => (
@@ -87,7 +87,9 @@ export function LongitudinalTable({ questionnaires }: Props) {
             <tr
               key={row.key}
               className={
-                idx < SCORE_ROWS.length ? 'bg-primary/5 hover:bg-primary/10' : 'hover:bg-slate-50'
+                idx < SCORE_ROWS.length
+                  ? 'bg-[#D4AF37]/5 hover:bg-[#D4AF37]/10'
+                  : 'hover:bg-slate-50'
               }
             >
               <td className="py-2.5 px-3 font-medium text-slate-700 sticky left-0 bg-white z-10 border-b border-slate-100 shadow-[1px_0_0_0_rgba(0,0,0,0.05)]">
@@ -106,10 +108,10 @@ export function LongitudinalTable({ questionnaires }: Props) {
               })}
             </tr>
           ))}
-          <tr className="bg-primary/10 border-t-2 border-primary/20">
+          <tr className="bg-[#D4AF37]/10 border-t-2 border-[#D4AF37]/20">
             <td
               colSpan={weekData.length + 1}
-              className="py-2 px-3 text-xs font-bold text-primary uppercase tracking-wide"
+              className="py-2 px-3 text-xs font-bold text-[#B8941F] uppercase tracking-wide"
             >
               Desatenção (TDAH) — 0 a 10
             </td>
@@ -132,10 +134,10 @@ export function LongitudinalTable({ questionnaires }: Props) {
               })}
             </tr>
           ))}
-          <tr className="bg-primary/10 border-t-2 border-primary/20">
+          <tr className="bg-[#D4AF37]/10 border-t-2 border-[#D4AF37]/20">
             <td
               colSpan={weekData.length + 1}
-              className="py-2 px-3 text-xs font-bold text-primary uppercase tracking-wide"
+              className="py-2 px-3 text-xs font-bold text-[#B8941F] uppercase tracking-wide"
             >
               Respostas Qualitativas
             </td>

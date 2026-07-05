@@ -13,15 +13,15 @@ const INATTENTION_FIELDS = [
 ]
 
 const depressionConfig = {
-  mood_score: { label: 'Humor', color: 'hsl(var(--chart-1))' },
-  energy_score: { label: 'Energia', color: 'hsl(var(--chart-2))' },
-  sleep_score: { label: 'Sono', color: 'hsl(var(--chart-3))' },
-  overall_feeling: { label: 'Sensação Geral', color: 'hsl(var(--chart-4))' },
+  mood_score: { label: 'Humor', color: '#D4AF37' },
+  energy_score: { label: 'Energia', color: '#3B7EA1' },
+  sleep_score: { label: 'Sono', color: '#5B9279' },
+  overall_feeling: { label: 'Sensação Geral', color: '#C97B4F' },
 }
 
 const attentionConfig = {
-  attention_score: { label: 'Atenção', color: 'hsl(var(--chart-1))' },
-  inattention_avg: { label: 'Desatenção (média)', color: 'hsl(var(--chart-5))' },
+  attention_score: { label: 'Atenção', color: '#D4AF37' },
+  inattention_avg: { label: 'Desatenção (média)', color: '#8B6BB1' },
 }
 
 interface Props {
@@ -86,30 +86,30 @@ export function PatientChart({ questionnaires }: Props) {
               <Line
                 type="monotone"
                 dataKey="mood_score"
-                stroke="var(--color-mood_score)"
+                stroke="#D4AF37"
                 strokeWidth={3}
-                dot={{ r: 4 }}
+                dot={{ r: 4, fill: '#D4AF37' }}
               />
               <Line
                 type="monotone"
                 dataKey="energy_score"
-                stroke="var(--color-energy_score)"
+                stroke="#3B7EA1"
                 strokeWidth={3}
-                dot={{ r: 4 }}
+                dot={{ r: 4, fill: '#3B7EA1' }}
               />
               <Line
                 type="monotone"
                 dataKey="sleep_score"
-                stroke="var(--color-sleep_score)"
+                stroke="#5B9279"
                 strokeWidth={3}
-                dot={{ r: 4 }}
+                dot={{ r: 4, fill: '#5B9279' }}
               />
               <Line
                 type="monotone"
                 dataKey="overall_feeling"
-                stroke="var(--color-overall_feeling)"
+                stroke="#C97B4F"
                 strokeWidth={3}
-                dot={{ r: 4 }}
+                dot={{ r: 4, fill: '#C97B4F' }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -142,17 +142,17 @@ export function PatientChart({ questionnaires }: Props) {
               <Line
                 type="monotone"
                 dataKey="attention_score"
-                stroke="var(--color-attention_score)"
+                stroke="#D4AF37"
                 strokeWidth={3}
-                dot={{ r: 4 }}
+                dot={{ r: 4, fill: '#D4AF37' }}
                 connectNulls
               />
               <Line
                 type="monotone"
                 dataKey="inattention_avg"
-                stroke="var(--color-inattention_avg)"
+                stroke="#8B6BB1"
                 strokeWidth={3}
-                dot={{ r: 4 }}
+                dot={{ r: 4, fill: '#8B6BB1' }}
                 strokeDasharray="5 5"
                 connectNulls
               />

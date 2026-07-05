@@ -90,15 +90,17 @@ export default function ProDashboard() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800 mb-2">Painel de Acompanhamento</h1>
+        <h1 className="text-2xl font-bold text-slate-800 mb-2 tracking-tight">
+          Painel de Acompanhamento
+        </h1>
         <p className="text-slate-600">
           Monitore a evolução dos seus pacientes no ciclo de 12 semanas.
         </p>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="p-4 bg-white border border-primary/20 shadow-sm relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
+        <Card className="p-4 bg-white border border-[#D4AF37]/20 shadow-sm relative overflow-hidden premium-card">
+          <div className="absolute top-0 left-0 w-1 h-full bg-[#D4AF37]" />
           <p className="text-sm text-slate-500 font-medium ml-2">Total Ativos</p>
           <p className="text-2xl font-bold text-slate-800 ml-2">{patients.length}</p>
         </Card>
@@ -125,7 +127,7 @@ export default function ProDashboard() {
         </Card>
       </div>
 
-      <Card className="p-6 border border-primary/10 shadow-sm">
+      <Card className="p-6 border border-[#D4AF37]/15 shadow-sm premium-card">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
           <div className="relative w-full md:w-72">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -152,13 +154,13 @@ export default function ProDashboard() {
         <div className="rounded-md border">
           <Table>
             <TableHeader>
-              <TableRow className="bg-primary/5 hover:bg-primary/5 border-primary/10">
-                <TableHead className="text-primary font-semibold">Paciente</TableHead>
-                <TableHead className="text-primary font-semibold">E-mail</TableHead>
-                <TableHead className="text-primary font-semibold">Semana Atual</TableHead>
-                <TableHead className="text-primary font-semibold">Questionários</TableHead>
-                <TableHead className="text-primary font-semibold">Status</TableHead>
-                <TableHead className="text-right text-primary font-semibold">Ação</TableHead>
+              <TableRow className="bg-[#D4AF37]/5 hover:bg-[#D4AF37]/5 border-[#D4AF37]/10">
+                <TableHead className="text-[#B8941F] font-semibold">Paciente</TableHead>
+                <TableHead className="text-[#B8941F] font-semibold">E-mail</TableHead>
+                <TableHead className="text-[#B8941F] font-semibold">Semana Atual</TableHead>
+                <TableHead className="text-[#B8941F] font-semibold">Questionários</TableHead>
+                <TableHead className="text-[#B8941F] font-semibold">Status</TableHead>
+                <TableHead className="text-right text-[#B8941F] font-semibold">Ação</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -179,7 +181,11 @@ export default function ProDashboard() {
                     </TableCell>
                     <TableCell>{statusBadge(status)}</TableCell>
                     <TableCell className="text-right">
-                      <Button variant="ghost" size="sm" className="text-primary">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-[#B8941F] hover:text-[#D4AF37]"
+                      >
                         Ver detalhes <ArrowRight className="w-4 h-4 ml-1" />
                       </Button>
                     </TableCell>
