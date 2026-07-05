@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-07-05T14:46:53.934Z",
+  "generatedAt": "2026-07-05T14:51:11.840Z",
   "collections": [
     {
       "name": "users",
       "type": "auth",
       "apiRules": {
-        "list": "id = @request.auth.id",
-        "view": "id = @request.auth.id",
+        "list": "@request.auth.id != '' && (id = @request.auth.id || @request.auth.role = 'professional')",
+        "view": "@request.auth.id != '' && (id = @request.auth.id || @request.auth.role = 'professional')",
         "create": "",
         "update": "id = @request.auth.id",
         "delete": "id = @request.auth.id"
@@ -29,20 +29,774 @@
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate"]
+          "autodateTriggers": [
+            "onCreate"
+          ]
         },
         {
           "name": "updated",
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate", "onUpdate"]
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
+        },
+        {
+          "name": "role",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "patient",
+            "professional"
+          ]
+        },
+        {
+          "name": "points",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "badges",
+          "type": "json",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "consent_accepted",
+          "type": "bool",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "consent_date",
+          "type": "date",
+          "required": false,
+          "system": false
         }
       ],
       "indexes": [
         "CREATE UNIQUE INDEX `idx_tokenKey__pb_users_auth_` ON `users` (`tokenKey`)",
         "CREATE UNIQUE INDEX `idx_email__pb_users_auth_` ON `users` (`email`) WHERE `email` != ''"
       ]
+    },
+    {
+      "name": "questionnaires",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != '' && (patient = @request.auth.id || @request.auth.role = 'professional')",
+        "view": "@request.auth.id != '' && (patient = @request.auth.id || @request.auth.role = 'professional')",
+        "create": "@request.auth.id != '' && patient = @request.auth.id",
+        "update": "@request.auth.id != '' && patient = @request.auth.id",
+        "delete": "@request.auth.id != '' && patient = @request.auth.id"
+      },
+      "fields": [
+        {
+          "name": "patient",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "users"
+        },
+        {
+          "name": "week_number",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "overall_feeling",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "improvement_areas",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Humor",
+            "Energia/disposição",
+            "Sono",
+            "Ansiedade",
+            "Outro"
+          ]
+        },
+        {
+          "name": "mood_score",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "energy_score",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "sleep_score",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "anxiety_freq",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Nunca",
+            "Só um pouco",
+            "Bastante",
+            "Demais"
+          ]
+        },
+        {
+          "name": "insomnia_freq",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Nunca",
+            "Só um pouco",
+            "Bastante",
+            "Demais"
+          ]
+        },
+        {
+          "name": "daytime_sleepiness",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Nunca",
+            "Só um pouco",
+            "Bastante",
+            "Demais"
+          ]
+        },
+        {
+          "name": "talkativeness",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Nunca",
+            "Só um pouco",
+            "Bastante",
+            "Demais"
+          ]
+        },
+        {
+          "name": "racing_thoughts",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Nunca",
+            "Só um pouco",
+            "Bastante",
+            "Demais"
+          ]
+        },
+        {
+          "name": "increased_goal_activity",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Nunca",
+            "Só um pouco",
+            "Bastante",
+            "Demais"
+          ]
+        },
+        {
+          "name": "risky_behavior",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Nunca",
+            "Só um pouco",
+            "Bastante",
+            "Demais"
+          ]
+        },
+        {
+          "name": "euphoria",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Nunca",
+            "Só um pouco",
+            "Bastante",
+            "Demais"
+          ]
+        },
+        {
+          "name": "depressed_mood",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Nunca",
+            "Só um pouco",
+            "Bastante",
+            "Demais"
+          ]
+        },
+        {
+          "name": "loss_of_interest",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Nunca",
+            "Só um pouco",
+            "Bastante",
+            "Demais"
+          ]
+        },
+        {
+          "name": "concentration_change",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Nunca",
+            "Só um pouco",
+            "Bastante",
+            "Demais"
+          ]
+        },
+        {
+          "name": "physical_activity",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Nunca",
+            "Só um pouco",
+            "Bastante",
+            "Demais"
+          ]
+        },
+        {
+          "name": "appetite_weight_change",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Sem alteração do apetite ou peso",
+            "Aumento do apetite e peso",
+            "Diminuição do apetite e peso"
+          ]
+        },
+        {
+          "name": "functional_impairment",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "Sem prejuízo significativo do seu funcionamento",
+            "Prejuízo do funcionamento social",
+            "Prejuízo no profissional/trabalho"
+          ]
+        },
+        {
+          "name": "specific_evolution",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "future_expectations",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate"
+          ]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
+        },
+        {
+          "name": "improvement_areas_other",
+          "type": "text",
+          "required": false,
+          "system": false
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_questionnaires_patient_week ON questionnaires (patient, week_number)"
+      ]
+    },
+    {
+      "name": "educational_materials",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "@request.auth.role = 'professional'",
+        "update": "@request.auth.role = 'professional'",
+        "delete": "@request.auth.role = 'professional'"
+      },
+      "fields": [
+        {
+          "name": "week_number",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "objective",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "content",
+          "type": "editor",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate"
+          ]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
+        }
+      ],
+      "indexes": [
+        "CREATE UNIQUE INDEX idx_educ_materials_week ON educational_materials (week_number)"
+      ]
+    },
+    {
+      "name": "patient_unlocks",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != '' && (patient = @request.auth.id || @request.auth.role = 'professional')",
+        "view": "@request.auth.id != '' && (patient = @request.auth.id || @request.auth.role = 'professional')",
+        "create": "@request.auth.role = 'professional'",
+        "update": "@request.auth.role = 'professional'",
+        "delete": "@request.auth.role = 'professional'"
+      },
+      "fields": [
+        {
+          "name": "patient",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "users"
+        },
+        {
+          "name": "week_number",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate"
+          ]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
+        }
+      ],
+      "indexes": [
+        "CREATE UNIQUE INDEX idx_patient_unlocks_patient_week ON patient_unlocks (patient, week_number)"
+      ]
+    },
+    {
+      "name": "questionnaire_configs",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "@request.auth.role = 'professional'",
+        "update": "@request.auth.role = 'professional'",
+        "delete": "@request.auth.role = 'professional'"
+      },
+      "fields": [
+        {
+          "name": "week_number",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "configs",
+          "type": "json",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate"
+          ]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
+        }
+      ],
+      "indexes": [
+        "CREATE UNIQUE INDEX idx_questionnaire_configs_week ON questionnaire_configs (week_number)"
+      ]
+    },
+    {
+      "name": "audit_logs",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.role = 'professional'",
+        "view": "@request.auth.role = 'professional'",
+        "create": "@request.auth.id != ''",
+        "update": null,
+        "delete": null
+      },
+      "fields": [
+        {
+          "name": "actor",
+          "type": "relation",
+          "required": false,
+          "system": false,
+          "collectionRef": "users"
+        },
+        {
+          "name": "action",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "resource_id",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "metadata",
+          "type": "json",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate"
+          ]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_audit_logs_actor ON audit_logs (actor)",
+        "CREATE INDEX idx_audit_logs_created ON audit_logs (created DESC)",
+        "CREATE INDEX idx_audit_logs_action ON audit_logs (action)"
+      ]
+    },
+    {
+      "name": "professional_notes",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.role = 'professional'",
+        "view": "@request.auth.role = 'professional'",
+        "create": "@request.auth.role = 'professional'",
+        "update": "@request.auth.role = 'professional'",
+        "delete": "@request.auth.role = 'professional'"
+      },
+      "fields": [
+        {
+          "name": "patient",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "users"
+        },
+        {
+          "name": "professional",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "users"
+        },
+        {
+          "name": "content",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate"
+          ]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_prof_notes_patient ON professional_notes (patient)",
+        "CREATE INDEX idx_prof_notes_professional ON professional_notes (professional)"
+      ]
+    },
+    {
+      "name": "notifications",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != '' && recipient = @request.auth.id",
+        "view": "@request.auth.id != '' && recipient = @request.auth.id",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != '' && recipient = @request.auth.id",
+        "delete": "@request.auth.id != '' && recipient = @request.auth.id"
+      },
+      "fields": [
+        {
+          "name": "recipient",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "users"
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "read",
+          "type": "bool",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "type",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "info",
+            "success",
+            "alert"
+          ]
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate"
+          ]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_notifications_recipient ON notifications (recipient)",
+        "CREATE INDEX idx_notifications_created ON notifications (created DESC)"
+      ]
+    },
+    {
+      "name": "material_completions",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != '' && (patient = @request.auth.id || @request.auth.role = 'professional')",
+        "view": "@request.auth.id != '' && (patient = @request.auth.id || @request.auth.role = 'professional')",
+        "create": "@request.auth.id != '' && patient = @request.auth.id",
+        "update": "@request.auth.id != '' && patient = @request.auth.id",
+        "delete": "@request.auth.id != '' && patient = @request.auth.id"
+      },
+      "fields": [
+        {
+          "name": "patient",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "users"
+        },
+        {
+          "name": "material",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "educational_materials"
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate"
+          ]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_material_completions_patient ON material_completions (patient)",
+        "CREATE INDEX idx_material_completions_material ON material_completions (material)",
+        "CREATE UNIQUE INDEX idx_mat_completions_patient_material ON material_completions (patient, material)"
+      ]
+    },
+    {
+      "name": "bonuses",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "@request.auth.role = 'professional'",
+        "update": "@request.auth.role = 'professional'",
+        "delete": "@request.auth.role = 'professional'"
+      },
+      "fields": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "content",
+          "type": "editor",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "video_url",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate"
+          ]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
+        }
+      ],
+      "indexes": []
     }
   ]
 }
