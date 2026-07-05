@@ -73,9 +73,9 @@ export default function PatientLibrary() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 mb-2">📚 Material Educativo</h1>
-          <p className="text-slate-600">A psicoeducação é parte fundamental do seu tratamento.</p>
-        </div>
+          <h1 className="text-2xl font-bold text-slate-900 mb-2">📚 Material Educativo</h1>
+          <p className="text-slate-700">A psicoeducação é parte fundamental do seu tratamento.</p>
+        </div>{' '}
         <div className="flex items-center gap-2 bg-amber-50 text-amber-700 px-4 py-2 rounded-full">
           <Star className="w-4 h-4" />
           <span className="text-sm font-bold">
@@ -122,7 +122,7 @@ export default function PatientLibrary() {
       </div>
 
       <Dialog open={!!reading} onOpenChange={(o) => !o && setReading(null)}>
-        <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
+        <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto bg-white text-slate-900">
           {reading && (
             <>
               <DialogHeader>
@@ -136,12 +136,12 @@ export default function PatientLibrary() {
                     </Badge>
                   )}
                 </div>
-                <p className="text-slate-500 font-medium pt-3 pb-5 border-b">
+                <p className="text-slate-700 font-medium pt-3 pb-5 border-b border-slate-200">
                   Objetivo: {reading.objective}
                 </p>
               </DialogHeader>
               <div
-                className="prose prose-slate max-w-none text-sm md:text-base prose-headings:text-amber-900 prose-headings:font-bold prose-h3:text-lg prose-p:leading-relaxed prose-li:leading-relaxed prose-a:text-amber-600 pb-8 [&_.mission-section]:not-prose [&_.phrase-section]:not-prose"
+                className="prose prose-slate max-w-none text-sm md:text-base prose-headings:text-slate-900 prose-headings:font-bold prose-h3:text-lg prose-p:text-slate-800 prose-p:leading-relaxed prose-li:text-slate-800 prose-li:leading-relaxed prose-strong:text-slate-900 prose-a:text-amber-700 pb-8 bg-white px-1 [&_.mission-section]:not-prose [&_.phrase-section]:not-prose"
                 dangerouslySetInnerHTML={{ __html: reading.content }}
               />
               {!completedMaterialIds.has(reading.id) && (
