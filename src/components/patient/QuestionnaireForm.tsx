@@ -27,7 +27,7 @@ import {
   IMPAIRMENT_OPTIONS,
 } from '@/lib/questionnaire-config'
 import { getQuestionnaireConfigByWeek } from '@/services/questionnaire_configs'
-import { Loader2, AlertCircle, Brain } from 'lucide-react'
+import { Loader2, AlertCircle } from 'lucide-react'
 
 interface FieldConfig {
   enabled: boolean
@@ -64,7 +64,7 @@ const ALWAYS_VISIBLE_FIELDS = new Set([
   'muscle_tension_freq',
 ])
 
-const WELCOME_MESSAGE = `Olá, bom dia! Vamos iniciar o nosso acompanhamento? O objetivo é avaliar a sua evolução ao longo do tratamento da depressão, monitorando seu humor, sono, energia, atenção e ansiedade. Suas respostas nos ajudam a personalizar seu cuidado e acelerar o seu processo de melhora. Atenciosamente, Dr. Igor`
+const WELCOME_MESSAGE = `Olá, bom dia! Vamos iniciar o nosso acompanhamento no Programa de Acompanhamento em Depressão e TDAH? O objetivo é avaliar a sua evolução ao longo do tratamento, monitorando seu humor, sono, energia, atenção e ansiedade. Suas respostas nos ajudam a personalizar seu cuidado e acelerar o seu processo de melhora. Atenciosamente, Dr. Igor`
 
 export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, isEditing }: Props) {
   const { user } = useAuth()
@@ -169,20 +169,22 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
         {getLabel(fieldName, label)} <span className="text-red-500">*</span>
       </Label>
       <Select value={form[fieldName]} onValueChange={(v) => update(fieldName, v)}>
-        <SelectTrigger className={cn('h-10', errors[fieldName] && 'border-red-400')}>
+        <SelectTrigger
+          className={cn('min-h-[44px] premium-select', errors[fieldName] && 'border-red-400')}
+        >
           <SelectValue placeholder="Selecione..." />
         </SelectTrigger>
         <SelectContent>
           {options.map((o) => (
-            <SelectItem key={o} value={o}>
+            <SelectItem key={o} value={o} className="min-h-[44px] py-3">
               {o}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
       {errors[fieldName] && (
-        <p className="text-xs text-red-500 flex items-center gap-1">
-          <AlertCircle className="w-3 h-3" /> Obrigatório
+        <p className="text-xs text-red-600 flex items-center gap-1 bg-red-50 px-2 py-1 rounded-md">
+          <AlertCircle className="w-3 h-3 flex-shrink-0" /> Obrigatório
         </p>
       )}
     </div>
@@ -190,22 +192,27 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
 
   const renderSlider = (f: { name: string; label: string; hint: string }) => (
     <div key={f.name} className="space-y-2">
-      <div className="flex justify-between items-center">
-        <div>
-          <Label className="text-sm font-medium">
+      <div className="flex justify-between items-start gap-3">
+        <div className="flex-1 min-w-0">
+          <Label className="text-sm font-medium leading-snug">
             {getLabel(f.name, f.label)}
             {ALWAYS_VISIBLE_FIELDS.has(f.name) && <span className="text-red-500 ml-0.5">*</span>}
           </Label>
-          <span className="text-xs text-slate-400 block">{getHint(f.name, f.hint)}</span>
+          <span className="text-xs text-slate-400 block mt-0.5">{getHint(f.name, f.hint)}</span>
         </div>
-        <span className="text-sm font-bold text-primary">{form[f.name]}/10</span>
+        <span className="text-sm font-bold text-primary whitespace-nowrap flex-shrink-0">
+          {form[f.name]}/10
+        </span>
       </div>
-      <Slider
-        value={[form[f.name]]}
-        onValueChange={(v) => update(f.name, v[0])}
-        max={10}
-        step={1}
-      />
+      <div className="py-2">
+        <Slider
+          value={[form[f.name]]}
+          onValueChange={(v) => update(f.name, v[0])}
+          max={10}
+          step={1}
+          className="premium-slider"
+        />
+      </div>
     </div>
   )
 
@@ -215,29 +222,31 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
         {getLabel(fieldName, label)} <span className="text-red-500">*</span>
       </Label>
       <Select value={form[fieldName]} onValueChange={(v) => update(fieldName, v)}>
-        <SelectTrigger className={cn('h-10', errors[fieldName] && 'border-red-400')}>
+        <SelectTrigger
+          className={cn('min-h-[44px] premium-select', errors[fieldName] && 'border-red-400')}
+        >
           <SelectValue placeholder="Selecione..." />
         </SelectTrigger>
         <SelectContent>
           {options.map((o) => (
-            <SelectItem key={o} value={o}>
+            <SelectItem key={o} value={o} className="min-h-[44px] py-3">
               {o}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
       {errors[fieldName] && (
-        <p className="text-xs text-red-500 flex items-center gap-1">
-          <AlertCircle className="w-3 h-3" /> Obrigatório
+        <p className="text-xs text-red-600 flex items-center gap-1 bg-red-50 px-2 py-1 rounded-md">
+          <AlertCircle className="w-3 h-3 flex-shrink-0" /> Obrigatório
         </p>
       )}
     </div>
   )
 
   return (
-    <div className="space-y-6 pb-8">
+    <div className="space-y-5 pb-24 sm:pb-8">
       {!isEditing && (
-        <Card className="p-5 bg-gradient-to-br from-primary/5 to-slate-50 border-primary/20">
+        <Card className="p-4 sm:p-5 bg-gradient-to-br from-[#D4AF37]/5 to-slate-50 border-[#D4AF37]/20 premium-card">
           <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">
             {WELCOME_MESSAGE}
           </p>
@@ -247,41 +256,44 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
       <div className="space-y-1.5">
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium text-slate-600">Progresso do formulário</span>
-          <span className="text-sm font-bold text-primary">{progress}%</span>
+          <span className="text-sm font-bold text-[#D4AF37]">{progress}%</span>
         </div>
         <Progress value={progress} className="h-2" />
       </div>
 
       {!isEditing && (
-        <Card className="p-5 space-y-3">
+        <Card className="p-4 sm:p-5 space-y-3 premium-card">
           <div className="space-y-1.5">
             <Label className="text-sm font-medium">Nome completo</Label>
-            <Input value={user?.name || ''} readOnly className="bg-slate-50" />
+            <Input value={user?.name || ''} readOnly className="bg-slate-50 min-h-[44px]" />
           </div>
           <div className="space-y-1.5">
             <Label className="text-sm font-medium">Email</Label>
-            <Input value={user?.email || ''} readOnly className="bg-slate-50" />
+            <Input value={user?.email || ''} readOnly className="bg-slate-50 min-h-[44px]" />
           </div>
         </Card>
       )}
 
-      <Card className="p-5 space-y-4">
+      <Card className="p-4 sm:p-5 space-y-4 premium-card">
         {isEnabled(SLIDER_FIELDS[0].name) && renderSlider(SLIDER_FIELDS[0])}
         {isEnabled('improvement_areas') && (
           <div className="space-y-2">
             <Label className="text-sm font-medium">
               {getLabel('improvement_areas', 'Em quais áreas você teve melhora essa semana?')}
             </Label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {IMPROVEMENT_OPTIONS.map((opt) => (
-                <div key={opt} className="flex items-center gap-2">
+                <div
+                  key={opt}
+                  className="flex items-center gap-2 min-h-[44px] px-2 py-1 rounded-lg hover:bg-[#D4AF37]/5 transition-colors cursor-pointer"
+                  onClick={() => toggleArea(opt)}
+                >
                   <Checkbox
                     checked={form.improvement_areas.includes(opt)}
                     onCheckedChange={() => toggleArea(opt)}
+                    className="data-[state=checked]:bg-[#D4AF37] data-[state=checked]:border-[#D4AF37]"
                   />
-                  <Label className="text-sm cursor-pointer" onClick={() => toggleArea(opt)}>
-                    {opt}
-                  </Label>
+                  <Label className="text-sm cursor-pointer select-none">{opt}</Label>
                 </div>
               ))}
             </div>
@@ -294,11 +306,11 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
                   value={form.improvement_areas_other}
                   onChange={(e) => update('improvement_areas_other', e.target.value)}
                   placeholder="Descreva a área de melhora..."
-                  className={cn(errors.improvement_areas_other && 'border-red-400')}
+                  className={cn('min-h-[44px]', errors.improvement_areas_other && 'border-red-400')}
                 />
                 {errors.improvement_areas_other && (
-                  <p className="text-xs text-red-500 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" /> Obrigatório
+                  <p className="text-xs text-red-600 flex items-center gap-1 bg-red-50 px-2 py-1 rounded-md">
+                    <AlertCircle className="w-3 h-3 flex-shrink-0" /> Obrigatório
                   </p>
                 )}
               </div>
@@ -310,7 +322,7 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
           .map(renderSlider)}
       </Card>
 
-      <Card className="p-5 space-y-4">
+      <Card className="p-4 sm:p-5 space-y-4 premium-card">
         {FREQUENCY_FIELDS.filter((f) => isEnabled(f.name)).map((f) =>
           renderFreqSelect(f.name, f.label, f.options),
         )}
@@ -332,7 +344,7 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
         )}
       </Card>
 
-      <Card className="p-5 space-y-4">
+      <Card className="p-4 sm:p-5 space-y-4 premium-card">
         {ATTENTION_SLIDER_FIELDS.filter((f) => isEnabled(f.name)).map(renderSlider)}
         <div className="space-y-3 pt-2 border-t border-slate-100">
           <p className="text-sm text-slate-500 italic">
@@ -343,7 +355,7 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
       </Card>
 
       {(isEnabled('specific_evolution') || isEnabled('future_expectations')) && (
-        <Card className="p-5 space-y-4">
+        <Card className="p-4 sm:p-5 space-y-4 premium-card">
           <h3 className="font-semibold text-slate-800">Evolução e Expectativas</h3>
           {isEnabled('specific_evolution') && (
             <div className="space-y-1">
@@ -354,7 +366,7 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
                 value={form.specific_evolution}
                 onChange={(e) => update('specific_evolution', e.target.value)}
                 placeholder="Descreva sua evolução..."
-                className="min-h-[80px]"
+                className="min-h-[88px]"
               />
             </div>
           )}
@@ -370,22 +382,29 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
                 value={form.future_expectations}
                 onChange={(e) => update('future_expectations', e.target.value)}
                 placeholder="Descreva suas expectativas..."
-                className="min-h-[80px]"
+                className="min-h-[88px]"
               />
             </div>
           )}
         </Card>
       )}
 
-      <Button onClick={handleSubmit} disabled={saving} className="w-full" size="lg">
-        {saving ? (
-          <>
-            <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Salvando...
-          </>
-        ) : (
-          submitLabel || 'Salvar Questionário'
-        )}
-      </Button>
+      <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white/90 backdrop-blur-md border-t border-[#D4AF37]/15 sm:static sm:bg-transparent sm:border-0 sm:backdrop-blur-none sm:p-0">
+        <Button
+          onClick={handleSubmit}
+          disabled={saving}
+          className="w-full min-h-[48px] premium-gradient text-base font-semibold shadow-lg sm:shadow-md"
+          size="lg"
+        >
+          {saving ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Salvando...
+            </>
+          ) : (
+            submitLabel || 'Salvar Questionário'
+          )}
+        </Button>
+      </div>
     </div>
   )
 }

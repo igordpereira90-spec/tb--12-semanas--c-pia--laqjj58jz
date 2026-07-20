@@ -31,17 +31,17 @@ export const SLIDER_FIELDS = [
   },
   {
     name: 'mood_score',
-    label: 'Qual a nota você daria para o seu humor essa semana?',
+    label: 'Que nota você daria para o seu humor esta semana?',
     hint: '0 = ruim / 10 = ótimo',
   },
   {
     name: 'energy_score',
-    label: 'Qual a nota você daria para a sua energia/disposição essa semana?',
+    label: 'Que nota você daria para a sua energia/disposição esta semana?',
     hint: '0 = ruim / 10 = ótimo',
   },
   {
     name: 'sleep_score',
-    label: 'Qual a nota você daria para o seu sono essa semana?',
+    label: 'Que nota você daria para o seu sono esta semana?',
     hint: '0 = ruim / 10 = ótimo',
   },
 ]
@@ -129,14 +129,12 @@ export const FREQUENCY_FIELDS: { name: string; label: string; options: readonly 
   },
   {
     name: 'depressed_mood',
-    label:
-      'Tem apresentado humor deprimido na maior parte do dia, quase todos os dias, conforme indicado por relato subjetivo ou por observação feita por outras pessoas?',
+    label: 'Tem apresentado humor deprimido na maior parte do dia, quase todos os dias?',
     options: FREQ_OPTIONS,
   },
   {
     name: 'loss_of_interest',
-    label:
-      'Tem apresentado acentuada diminuição do interesse ou prazer em todas ou quase todas as atividades na maior parte do dia, quase todos os dias?',
+    label: 'Tem apresentado diminuição do interesse ou prazer em atividades na maior parte do dia?',
     options: FREQ_OPTIONS,
   },
   {
