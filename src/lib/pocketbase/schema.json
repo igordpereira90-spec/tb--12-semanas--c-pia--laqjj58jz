@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-20T18:41:24.526Z",
+  "generatedAt": "2026-07-20T18:54:32.882Z",
   "collections": [
     {
       "name": "users",
@@ -8,8 +8,8 @@
         "list": "@request.auth.id != '' && (id = @request.auth.id || @request.auth.role = 'professional')",
         "view": "@request.auth.id != '' && (id = @request.auth.id || @request.auth.role = 'professional')",
         "create": "",
-        "update": "id = @request.auth.id",
-        "delete": "id = @request.auth.id"
+        "update": "id = @request.auth.id || (@request.auth.role = 'professional' && role = 'patient')",
+        "delete": "id = @request.auth.id || (@request.auth.role = 'professional' && role = 'patient')"
       },
       "fields": [
         {

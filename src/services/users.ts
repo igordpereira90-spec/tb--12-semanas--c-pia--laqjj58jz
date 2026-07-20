@@ -25,3 +25,11 @@ export async function getPatients() {
 export async function getUser(id: string) {
   return pb.collection('users').getOne<AppUser>(id)
 }
+
+export async function updateUser(id: string, data: Partial<{ name: string }>) {
+  return pb.collection('users').update<AppUser>(id, data)
+}
+
+export async function deleteUser(id: string) {
+  return pb.collection('users').delete(id)
+}

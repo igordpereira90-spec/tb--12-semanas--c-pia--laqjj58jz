@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRealtime } from '@/hooks/use-realtime'
-import { getPatients } from '@/services/users'
+import { getPatients, updateUser, deleteUser } from '@/services/users'
 import { getQuestionnaires } from '@/services/questionnaires'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -15,8 +15,27 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Search, AlertCircle, Clock, CheckCircle2, ArrowRight, Loader2 } from 'lucide-react'
+import {
+  Search,
+  AlertCircle,
+  Clock,
+  CheckCircle2,
+  ArrowRight,
+  Loader2,
+  MoreVertical,
+  Pencil,
+  Trash2,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu'
+import { EditPatientNameDialog } from '@/components/professional/EditPatientNameDialog'
+import { DeletePatientDialog } from '@/components/professional/DeletePatientDialog'
 import { getPatientStatus, getCurrentWeek } from '@/lib/patient-utils'
 import { QUESTIONNAIRE_WEEKS } from '@/lib/questionnaire-config'
 import type { AppUser } from '@/services/users'
@@ -29,6 +48,8 @@ export default function ProDashboard() {
   const [patients, setPatients] = useState<AppUser[]>([])
   const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([])
   const [loading, setLoading] = useState(true)
+  const [editPatient, setEditPatient] = useState<AppUser | null>(null)
+  const [deletePatientState, setDeletePatientState] = useState<AppUser | null>(null)
 
   const loadData = useCallback(async () => {
     try {
@@ -181,13 +202,53 @@ export default function ProDashboard() {
                     </TableCell>
                     <TableCell>{statusBadge(status)}</TableCell>
                     <TableCell className="text-right">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-[#B8941F] hover:text-[#D4AF37]"
-                      >
-                        Ver detalhes <ArrowRight className="w-4 h-4 ml-1" />
-                      </Button>
+                      <div className="flex items-center justify-end gap-1">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-[#B8941F] hover:text-[#D4AF37]"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            navigate(`/pro/patient/${patient.id}`)
+                          }}
+                        >
+                          Ver detalhes <ArrowRight className="w-4 h-4 ml-1" />
+                        </Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-slate-500 hover:text-[#D4AF37]"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <MoreVertical className="w-4 h-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                setEditPatient(patient)
+                              }}
+                            >
+                              <Pencil className="w-4 h-4 mr-2 text-[#B8941F]" />
+                              Editar Nome
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                              className="text-rose-600 focus:text-rose-700"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                setDeletePatientState(patient)
+                              }}
+                            >
+                              <Trash2 className="w-4 h-4 mr-2" />
+                              Excluir Paciente
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
                     </TableCell>
                   </TableRow>
                 )
@@ -203,6 +264,30 @@ export default function ProDashboard() {
           </Table>
         </div>
       </Card>
+
+      {editPatient && (
+        <EditPatientNameDialog
+          patient={editPatient}
+          open={!!editPatient}
+          onOpenChange={(open) => !open && setEditPatient(null)}
+          onSaved={() => {
+            setEditPatient(null)
+            loadData()
+          }}
+        />
+      )}
+
+      {deletePatientState && (
+        <DeletePatientDialog
+          patient={deletePatientState}
+          open={!!deletePatientState}
+          onOpenChange={(open) => !open && setDeletePatientState(null)}
+          onDeleted={() => {
+            setDeletePatientState(null)
+            loadData()
+          }}
+        />
+      )}
     </div>
   )
 }
