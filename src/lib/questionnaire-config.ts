@@ -113,6 +113,31 @@ export const FREQUENCY_FIELDS: { name: string; label: string; options: readonly 
     options: FREQ_OPTIONS,
   },
   {
+    name: 'talkativeness',
+    label: 'Com que frequência tem falado mais do que o habitual ou sentido necessidade de falar?',
+    options: FREQ_OPTIONS,
+  },
+  {
+    name: 'racing_thoughts',
+    label: 'Com que frequência tem apresentado pensamentos acelerados?',
+    options: FREQ_OPTIONS,
+  },
+  {
+    name: 'increased_goal_activity',
+    label: 'Com que frequência teve aumento de metas ou atividades?',
+    options: FREQ_OPTIONS,
+  },
+  {
+    name: 'risky_behavior',
+    label: 'Com que frequência se envolveu em comportamentos de risco?',
+    options: FREQ_OPTIONS,
+  },
+  {
+    name: 'euphoria',
+    label: 'Com que frequência apresentou euforia ou humor elevado demais?',
+    options: FREQ_OPTIONS,
+  },
+  {
     name: 'worry_freq',
     label: 'Com que frequência tem apresentado preocupação exagerada?',
     options: FREQ_OPTIONS,

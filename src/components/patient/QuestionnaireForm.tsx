@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useAuth } from '@/hooks/use-auth'
 import { useToast } from '@/hooks/use-toast'
 import { cn } from '@/lib/utils'
@@ -19,6 +19,9 @@ import {
   IMPAIRMENT_OPTIONS,
 } from '@/lib/questionnaire-config'
 import { getQuestionnaireConfigByWeek } from '@/services/questionnaire_configs'
+import { getOrCreateQuestionnaireDraft, updateQuestionnaire } from '@/services/questionnaires'
+import { useAutoSave } from '@/hooks/use-auto-save'
+import { AutoSaveIndicator } from '@/components/patient/AutoSaveIndicator'
 import { Loader2, AlertCircle, Check } from 'lucide-react'
 
 interface FieldConfig {
@@ -34,6 +37,7 @@ interface Props {
   initialData?: Record<string, unknown>
   submitLabel?: string
   isEditing?: boolean
+  recordId?: string | null
 }
 
 const BASE_REQUIRED = [
@@ -56,14 +60,42 @@ const ALWAYS_VISIBLE_FIELDS = new Set([
   'muscle_tension_freq',
 ])
 
+const DEBOUNCE_FIELDS = new Set([
+  'specific_evolution',
+  'future_expectations',
+  'improvement_areas_other',
+])
+
 const WELCOME_MESSAGE = `Olá, bom dia! Vamos iniciar o nosso acompanhamento no Programa de Acompanhamento em Depressão e TDAH? O objetivo é avaliar a sua evolução ao longo do tratamento, monitorando seu humor, sono, energia, atenção e ansiedade. Suas respostas nos ajudam a personalizar seu cuidado e acelerar o seu processo de melhora. Atenciosamente, Dr. Igor`
 
-export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, isEditing }: Props) {
+export function QuestionnaireForm({
+  week,
+  onSubmit,
+  initialData,
+  submitLabel,
+  isEditing,
+  recordId,
+}: Props) {
   const { user } = useAuth()
   const { toast } = useToast()
   const [saving, setSaving] = useState(false)
   const [errors, setErrors] = useState<Record<string, boolean>>({})
   const [config, setConfig] = useState<WeekConfigs | null>(null)
+  const draftIdRef = useRef<string | null>(recordId ?? null)
+
+  const saveFn = useCallback(
+    async (data: Record<string, unknown>) => {
+      if (!user?.id) return
+      const payload = { ...data, patient: user.id, week_number: week }
+      if (draftIdRef.current) {
+        await updateQuestionnaire(draftIdRef.current, payload)
+      } else {
+        const record = await getOrCreateQuestionnaireDraft(user.id, week, payload)
+        draftIdRef.current = record.id
+      }
+    },
+    [user?.id, week],
+  )
 
   const get = (field: string, def: any) =>
     initialData && initialData[field] !== undefined && initialData[field] !== null
@@ -90,6 +122,11 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
     anxiety_freq: get('anxiety_freq', ''),
     insomnia_freq: get('insomnia_freq', ''),
     daytime_sleepiness: get('daytime_sleepiness', ''),
+    talkativeness: get('talkativeness', ''),
+    racing_thoughts: get('racing_thoughts', ''),
+    increased_goal_activity: get('increased_goal_activity', ''),
+    risky_behavior: get('risky_behavior', ''),
+    euphoria: get('euphoria', ''),
     worry_freq: get('worry_freq', ''),
     irritability_freq: get('irritability_freq', ''),
     muscle_tension_freq: get('muscle_tension_freq', ''),
@@ -110,6 +147,11 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
       .catch(() => setConfig(null))
   }, [week, isEditing])
 
+  const { status: autoSaveStatus, flush } = useAutoSave(form, {
+    saveFn,
+    enabled: !isEditing,
+  })
+
   const isEnabled = (name: string) =>
     isEditing || ALWAYS_VISIBLE_FIELDS.has(name) || !config || config[name]?.enabled !== false
   const getLabel = (name: string, def: string) => config?.[name]?.label || def
@@ -123,8 +165,12 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
   ]
 
   const update = (field: string, value: any) => {
-    setForm((p) => ({ ...p, [field]: value }))
+    const newForm = { ...form, [field]: value }
+    setForm(newForm)
     if (errors[field]) setErrors((p) => ({ ...p, [field]: false }))
+    if (!isEditing && !DEBOUNCE_FIELDS.has(field)) {
+      flush(newForm)
+    }
   }
 
   const toggleArea = (opt: string) => {
@@ -149,6 +195,13 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
     }
     setSaving(true)
     try {
+      if (!isEditing) {
+        const saved = await flush({ ...form, week_number: week })
+        if (!saved) {
+          toast({ title: 'Erro', description: 'Não foi possível salvar. Verifique sua conexão.' })
+          return
+        }
+      }
       await onSubmit({ ...form, week_number: week })
     } finally {
       setSaving(false)
@@ -278,7 +331,10 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
       <div className="space-y-1.5">
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium text-slate-600">Progresso do formulário</span>
-          <span className="text-sm font-bold text-[#D4AF37]">{progress}%</span>
+          <div className="flex items-center gap-3">
+            {!isEditing && <AutoSaveIndicator status={autoSaveStatus} />}
+            <span className="text-sm font-bold text-[#D4AF37]">{progress}%</span>
+          </div>
         </div>
         <Progress value={progress} className="h-2" />
       </div>

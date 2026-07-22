@@ -69,3 +69,13 @@ export async function getQuestionnaireByWeek(patientId: string, week: number) {
     return null
   }
 }
+
+export async function getOrCreateQuestionnaireDraft(
+  patientId: string,
+  week: number,
+  data?: Partial<Questionnaire>,
+) {
+  const existing = await getQuestionnaireByWeek(patientId, week)
+  if (existing) return existing
+  return createQuestionnaire({ ...data, patient: patientId, week_number: week })
+}

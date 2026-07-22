@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '@/hooks/use-auth'
 import { useToast } from '@/hooks/use-toast'
 import { useUnlocks } from '@/hooks/use-unlocks'
-import { createQuestionnaire, getQuestionnaires } from '@/services/questionnaires'
+import { getQuestionnaires } from '@/services/questionnaires'
 import { QuestionnaireForm } from '@/components/patient/QuestionnaireForm'
 import { CelebrationModal } from '@/components/patient/CelebrationModal'
 import { Button } from '@/components/ui/button'
@@ -37,20 +37,22 @@ export default function QuestionnaireFormPage() {
       .finally(() => setLoadingQs(false))
   }, [user?.id])
 
-  const handleSubmit = async (data: Record<string, unknown>) => {
+  const handleSubmit = async (_data: Record<string, unknown>) => {
     if (!user?.id) return
     try {
-      await createQuestionnaire({ ...data, patient: user.id } as Partial<Questionnaire>)
       await refreshAuthUser()
-      const completedWeeks = questionnaires.map((q) => q.week_number)
-      const calc = calculateQuestionnairePoints(weekNumber, completedWeeks)
+      const prevWeeks = questionnaires
+        .filter((q) => q.week_number !== weekNumber)
+        .map((q) => q.week_number)
+      const calc = calculateQuestionnairePoints(weekNumber, prevWeeks)
       setEarnedPoints(calc)
       setCelebration(true)
     } catch {
-      toast({ title: 'Erro', description: 'Não foi possível salvar o questionário.' })
+      toast({ title: 'Erro', description: 'Não foi possível finalizar o questionário.' })
     }
   }
 
+  const existingDraft = questionnaires.find((q) => q.week_number === weekNumber)
   const completedWeeks = questionnaires.map((q) => q.week_number)
   const hasAccess = isQuestionnaireAccessible(
     weekNumber,
@@ -104,7 +106,12 @@ export default function QuestionnaireFormPage() {
           </div>
         </div>
       </div>
-      <QuestionnaireForm week={weekNumber} onSubmit={handleSubmit} />
+      <QuestionnaireForm
+        week={weekNumber}
+        onSubmit={handleSubmit}
+        initialData={existingDraft}
+        recordId={existingDraft?.id ?? null}
+      />
       <CelebrationModal
         open={celebration}
         onClose={() => {
