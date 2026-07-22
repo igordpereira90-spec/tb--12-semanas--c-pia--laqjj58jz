@@ -5,18 +5,10 @@ import { cn } from '@/lib/utils'
 import { Slider } from '@/components/ui/slider'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
 import { Progress } from '@/components/ui/progress'
 import { Card } from '@/components/ui/card'
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from '@/components/ui/select'
 import {
   SLIDER_FIELDS,
   ATTENTION_SLIDER_FIELDS,
@@ -27,7 +19,7 @@ import {
   IMPAIRMENT_OPTIONS,
 } from '@/lib/questionnaire-config'
 import { getQuestionnaireConfigByWeek } from '@/services/questionnaire_configs'
-import { Loader2, AlertCircle } from 'lucide-react'
+import { Loader2, AlertCircle, Check } from 'lucide-react'
 
 interface FieldConfig {
   enabled: boolean
@@ -164,24 +156,39 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
   }
 
   const renderFreqSelect = (fieldName: string, label: string, options: readonly string[]) => (
-    <div key={fieldName} className="space-y-1.5">
+    <div key={fieldName} className="space-y-2">
       <Label className="text-sm font-medium text-slate-700">
         {getLabel(fieldName, label)} <span className="text-red-500">*</span>
       </Label>
-      <Select value={form[fieldName]} onValueChange={(v) => update(fieldName, v)}>
-        <SelectTrigger
-          className={cn('min-h-[44px] premium-select', errors[fieldName] && 'border-red-400')}
-        >
-          <SelectValue placeholder="Selecione..." />
-        </SelectTrigger>
-        <SelectContent>
-          {options.map((o) => (
-            <SelectItem key={o} value={o} className="min-h-[44px] py-3">
-              {o}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="flex flex-col gap-2">
+        {options.map((o) => {
+          const isSelected = form[fieldName] === o
+          return (
+            <button
+              key={o}
+              type="button"
+              onClick={() => update(fieldName, o)}
+              className={cn(
+                'flex items-center gap-2.5 min-h-[48px] px-4 py-2.5 rounded-xl border text-left text-sm font-medium transition-all duration-200',
+                'hover:border-[#D4AF37]/40 hover:bg-[#D4AF37]/5',
+                isSelected
+                  ? 'border-[#D4AF37] bg-[#D4AF37]/10 text-slate-800 shadow-sm'
+                  : 'border-slate-200 bg-white text-slate-600',
+              )}
+            >
+              <span
+                className={cn(
+                  'flex items-center justify-center w-5 h-5 rounded-full border-2 transition-all duration-200 flex-shrink-0',
+                  isSelected ? 'border-[#D4AF37] bg-[#D4AF37]' : 'border-slate-300 bg-white',
+                )}
+              >
+                {isSelected && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
+              </span>
+              <span className="leading-snug">{o}</span>
+            </button>
+          )
+        })}
+      </div>
       {errors[fieldName] && (
         <p className="text-xs text-red-600 flex items-center gap-1 bg-red-50 px-2 py-1 rounded-md">
           <AlertCircle className="w-3 h-3 flex-shrink-0" /> Obrigatório
@@ -217,24 +224,39 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
   )
 
   const renderRequiredSelect = (fieldName: string, label: string, options: readonly string[]) => (
-    <div className="space-y-1.5">
+    <div className="space-y-2">
       <Label className="text-sm font-medium text-slate-700">
         {getLabel(fieldName, label)} <span className="text-red-500">*</span>
       </Label>
-      <Select value={form[fieldName]} onValueChange={(v) => update(fieldName, v)}>
-        <SelectTrigger
-          className={cn('min-h-[44px] premium-select', errors[fieldName] && 'border-red-400')}
-        >
-          <SelectValue placeholder="Selecione..." />
-        </SelectTrigger>
-        <SelectContent>
-          {options.map((o) => (
-            <SelectItem key={o} value={o} className="min-h-[44px] py-3">
-              {o}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="flex flex-col gap-2">
+        {options.map((o) => {
+          const isSelected = form[fieldName] === o
+          return (
+            <button
+              key={o}
+              type="button"
+              onClick={() => update(fieldName, o)}
+              className={cn(
+                'flex items-center gap-2.5 min-h-[48px] px-4 py-2.5 rounded-xl border text-left text-sm font-medium transition-all duration-200',
+                'hover:border-[#D4AF37]/40 hover:bg-[#D4AF37]/5',
+                isSelected
+                  ? 'border-[#D4AF37] bg-[#D4AF37]/10 text-slate-800 shadow-sm'
+                  : 'border-slate-200 bg-white text-slate-600',
+              )}
+            >
+              <span
+                className={cn(
+                  'flex items-center justify-center w-5 h-5 rounded-full border-2 transition-all duration-200 flex-shrink-0',
+                  isSelected ? 'border-[#D4AF37] bg-[#D4AF37]' : 'border-slate-300 bg-white',
+                )}
+              >
+                {isSelected && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
+              </span>
+              <span className="leading-snug">{o}</span>
+            </button>
+          )
+        })}
+      </div>
       {errors[fieldName] && (
         <p className="text-xs text-red-600 flex items-center gap-1 bg-red-50 px-2 py-1 rounded-md">
           <AlertCircle className="w-3 h-3 flex-shrink-0" /> Obrigatório
@@ -281,21 +303,34 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
             <Label className="text-sm font-medium">
               {getLabel('improvement_areas', 'Em quais áreas você teve melhora essa semana?')}
             </Label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {IMPROVEMENT_OPTIONS.map((opt) => (
-                <div
-                  key={opt}
-                  className="flex items-center gap-2 min-h-[44px] px-2 py-1 rounded-lg hover:bg-[#D4AF37]/5 transition-colors cursor-pointer"
-                  onClick={() => toggleArea(opt)}
-                >
-                  <Checkbox
-                    checked={form.improvement_areas.includes(opt)}
-                    onCheckedChange={() => toggleArea(opt)}
-                    className="data-[state=checked]:bg-[#D4AF37] data-[state=checked]:border-[#D4AF37]"
-                  />
-                  <Label className="text-sm cursor-pointer select-none">{opt}</Label>
-                </div>
-              ))}
+            <div className="flex flex-col gap-2">
+              {IMPROVEMENT_OPTIONS.map((opt) => {
+                const isSelected = form.improvement_areas.includes(opt)
+                return (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => toggleArea(opt)}
+                    className={cn(
+                      'flex items-center gap-2.5 min-h-[48px] px-4 py-2.5 rounded-xl border text-left text-sm font-medium transition-all duration-200',
+                      'hover:border-[#D4AF37]/40 hover:bg-[#D4AF37]/5',
+                      isSelected
+                        ? 'border-[#D4AF37] bg-[#D4AF37]/10 text-slate-800 shadow-sm'
+                        : 'border-slate-200 bg-white text-slate-600',
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        'flex items-center justify-center w-5 h-5 rounded-md border-2 transition-all duration-200 flex-shrink-0',
+                        isSelected ? 'border-[#D4AF37] bg-[#D4AF37]' : 'border-slate-300 bg-white',
+                      )}
+                    >
+                      {isSelected && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
+                    </span>
+                    <span className="leading-snug">{opt}</span>
+                  </button>
+                )
+              })}
             </div>
             {form.improvement_areas.includes('Outro') && (
               <div className="space-y-1.5 mt-2">
@@ -322,12 +357,12 @@ export function QuestionnaireForm({ week, onSubmit, initialData, submitLabel, is
           .map(renderSlider)}
       </Card>
 
-      <Card className="p-4 sm:p-5 space-y-4 premium-card">
+      <Card className="p-4 sm:p-5 space-y-5 premium-card">
         {FREQUENCY_FIELDS.filter((f) => isEnabled(f.name)).map((f) =>
           renderFreqSelect(f.name, f.label, f.options),
         )}
         {(isEnabled('appetite_weight_change') || isEnabled('functional_impairment')) && (
-          <div className="space-y-4">
+          <div className="space-y-5">
             {isEnabled('appetite_weight_change') &&
               renderRequiredSelect(
                 'appetite_weight_change',
